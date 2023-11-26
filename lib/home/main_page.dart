@@ -1,4 +1,7 @@
+import 'package:delivery_app/home/slider_catalogo_page.dart';
 import 'package:delivery_app/utils/colors.dart';
+import 'package:delivery_app/widgets/big_text.dart';
+import 'package:delivery_app/widgets/sub_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -25,8 +28,13 @@ class _MainPageState extends State<MainPage> {
                 children: [
                   Column(
                     children: [
-                      Text("A entregar"),
-                      Text("Direccion")
+                      BigText(text: "A entregar", color: AppColors.mainColor),
+                      Row(
+                        children: [
+                          SubText(text: "Direccion", color: AppColors.mainBlackColor),
+                          Icon(Icons.arrow_drop_down_rounded)
+                        ],
+                      )
                     ],
                   ),
                   Center(
@@ -43,7 +51,8 @@ class _MainPageState extends State<MainPage> {
                 ],
               ),
             ),
-          )
+          ),
+          SliderCatalogoPage(),
         ],
       )
 

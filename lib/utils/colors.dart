@@ -9,5 +9,4 @@ class AppColors {
   static const Color signColor = Color(0xFFa9a29f);
   static const Color titleColor = Color(0xFF5c524f);
   static const Color mainBlackColor = Color(0xFF332d2b);
-
 }
