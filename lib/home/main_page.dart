@@ -17,6 +17,13 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  bool switchValue = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,26 +39,10 @@ class _MainPageState extends State<MainPage> {
                 children: [
                   Column(
                     children: [
-                      BigText(text: "A entregar", color: AppColors.mainColor),
-                      Row(
-                        children: [
-                          SubText(text: "Direccion", color: AppColors.mainBlackColor),
-                          Icon(Icons.arrow_drop_down_rounded)
-                        ],
-                      )
+                      BigText(text: "Direccion", color: AppColors.mainColor),
                     ],
                   ),
-                  Center(
-                      child: Container(
-                        width: Dimensions.height45,
-                        height: Dimensions.height45,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(Dimensions.radius15),
-                          color: AppColors.mainColor,
-                        ),
-                        child: const Icon(Icons.search, color: Colors.white),
-                    )
-                  )
+                  customSwitch()
                 ],
               ),
             ),
@@ -61,6 +52,27 @@ class _MainPageState extends State<MainPage> {
         ],
       )
 
+    );
+  }
+
+  Center customSwitch() {
+    return Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.directions_walk, color: switchValue ? Colors.grey : AppColors.mainColor),
+          CupertinoSwitch(
+            activeColor: AppColors.mainColor,
+            value: switchValue,
+            onChanged: (value) {
+              setState(() {
+                switchValue = value;
+              });
+            },
+          ),
+          Icon(Icons.delivery_dining, color: switchValue ? AppColors.mainColor : Colors.grey),
+        ],
+      ),
     );
   }
 
