@@ -46,7 +46,7 @@ class _MainPageState extends State<MainPage> {
           // Barra de búsqueda
           Padding(
             padding: EdgeInsets.only(top: Dimensions.height10, bottom: Dimensions.height10, left: Dimensions.width10, right: Dimensions.width10),
-            child: TextField(
+            child: const TextField(
               decoration: InputDecoration(
                 hintText: 'Buscar...',
                 prefixIcon: Icon(Icons.search),
@@ -54,11 +54,11 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
           ),
+
           //slider catalogo
-          SliderCatalogoPage(),
+          const SliderCatalogoPage(),
         ],
       )
-
     );
   }
 
