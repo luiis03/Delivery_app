@@ -27,23 +27,30 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          backgroundColor: AppColors.mainBlackColor,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                children: [
+                  BigText(text: "Direccion", color: AppColors.mainColor),
+                ],
+              ),
+              customSwitch(),
+            ],
+          ),
+        ),
       body: Column(
         children: [
-          //header
-          Container(
-            child: Container(
-              margin: EdgeInsets.only(top: Dimensions.height45, bottom: Dimensions.height15),
-              padding: EdgeInsets.only(left: Dimensions.width20, right: Dimensions.width30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    children: [
-                      BigText(text: "Direccion", color: AppColors.mainColor),
-                    ],
-                  ),
-                  customSwitch()
-                ],
+          // Barra de búsqueda
+          Padding(
+            padding: EdgeInsets.only(top: Dimensions.height10, bottom: Dimensions.height10, left: Dimensions.width10, right: Dimensions.width10),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Buscar...',
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(),
               ),
             ),
           ),
