@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:delivery_app/utils/dimensions.dart';
 import 'package:delivery_app/widgets/big_text.dart';
 import 'package:delivery_app/widgets/icon_text_widget.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
+import '../models/restaurantes.dart';
 import '../utils/colors.dart';
 
 class SliderCatalogoPage extends StatefulWidget {
@@ -17,6 +21,7 @@ class SliderCatalogoPage extends StatefulWidget {
 class _SliderCatalogoPageState extends State<SliderCatalogoPage> {
   PageController pageController = PageController(viewportFraction: 1.0);
   double _currentPage = 0.0;
+
 
   @override
   void initState() {
