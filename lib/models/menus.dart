@@ -4,7 +4,7 @@ class Menus {
   final int id;
   final String nombre;
   final double precio;
-  final Platos platos;
+  final List<Platos> platos;
 
   Menus({
     required this.id,

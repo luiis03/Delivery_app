@@ -9,7 +9,9 @@ class Restaurantes {
   final String codigo_postal;
   final String telefono;
   final String horario;
-  final Menus menus;
+  final String logo_imagen;
+  final String img_default;
+  final List<dynamic> menus;
 
   Restaurantes({
     required this.id,
@@ -20,6 +22,8 @@ class Restaurantes {
     required this.codigo_postal,
     required this.telefono,
     required this.horario,
+    required this.logo_imagen,
+    required this.img_default,
     required this.menus
   });
 
