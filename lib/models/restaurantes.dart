@@ -11,6 +11,7 @@ class Restaurantes {
   final String horario;
   final String logo_imagen;
   final String img_default;
+  final String tiempo_estimado;
   final List<dynamic> menus;
 
   Restaurantes({
@@ -24,6 +25,7 @@ class Restaurantes {
     required this.horario,
     required this.logo_imagen,
     required this.img_default,
+    required this.tiempo_estimado,
     required this.menus
   });
 
