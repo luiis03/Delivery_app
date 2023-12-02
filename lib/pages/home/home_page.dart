@@ -69,6 +69,7 @@ class _HomePageState extends State<HomePage> {
                         suffixStyle: TextStyle(color: Colors.white),
                         counterStyle: TextStyle(color: Colors.white),
                       ),
+                      style: TextStyle(color: Colors.white),
                     ),
                   ),
                 ),
