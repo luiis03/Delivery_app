@@ -21,9 +21,8 @@ class SliderCatalogoPage extends StatefulWidget {
 }
 
 class _SliderCatalogoPageState extends State<SliderCatalogoPage> {
-  PageController pageController = PageController(viewportFraction: 1.0);
+  PageController pageController = PageController(viewportFraction: 0.85);
   double _currentPage = 0.0;
-
   List<Restaurantes> restaurantes = [];
 
   Future<List<Restaurantes>> getRestaurantes() async {
@@ -48,17 +47,13 @@ class _SliderCatalogoPageState extends State<SliderCatalogoPage> {
           );
           fetchedRestaurantes.add(restaurante);
         }
-        print(fetchedRestaurantes.length);
         return fetchedRestaurantes;
       } else {
-        // Manejar el error de manera más explícita y devolver una lista vacía
         print('Error en la solicitud HTTP: ${response.statusCode}');
         print('Cuerpo de la respuesta: ${response.body}');
         return [];
       }
     } catch (error) {
-      // Manejar errores de manera general y devolver una lista vacía
-      print(error);
       print('Error en la solicitud HTTP: $error');
       return [];
     }
@@ -67,6 +62,14 @@ class _SliderCatalogoPageState extends State<SliderCatalogoPage> {
   @override
   void initState() {
     super.initState();
+    cargarRestaurantes();
+  }
+
+  Future<void> cargarRestaurantes() async {
+    List<Restaurantes> restaurantes = await getRestaurantes();
+    setState(() {
+      this.restaurantes = restaurantes;
+    });
   }
 
   @override
@@ -77,20 +80,20 @@ class _SliderCatalogoPageState extends State<SliderCatalogoPage> {
           color: AppColors.mainBlackColor,
           height: 280,
           child: PageView.builder(
-            //para reducir el tamaño del contenedor y poder ver el resto del slider
-              controller: PageController(viewportFraction: 0.85),
-              onPageChanged: (int page) {
-                setState(() {
-                  _currentPage = page.toDouble();
-                });
-              },
-              itemCount: 5,
-              itemBuilder: (context, position) {
-                return _buildPageItem(position);
-              }),
+            controller: pageController,
+            onPageChanged: (int page) {
+              setState(() {
+                _currentPage = page.toDouble();
+              });
+            },
+            itemCount: restaurantes.length,
+            itemBuilder: (context, position) {
+              return _buildPageItem(position);
+            },
           ),
+        ),
         DotsIndicator(
-          dotsCount: 5,
+          dotsCount: restaurantes.length,
           position: _currentPage.toInt(),
           decorator: DotsDecorator(
             activeColor: AppColors.mainColor,
@@ -104,65 +107,67 @@ class _SliderCatalogoPageState extends State<SliderCatalogoPage> {
   }
 
   Widget _buildPageItem(int position){
+    Restaurantes restaurante = restaurantes[position];
     return Stack(
-          children: [
-            //Logo restaurante
-            Container(
-              height: Get.context!.height/4.13,
-              margin: EdgeInsets.only(left: Dimensions.width10, right: Dimensions.width10),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(Dimensions.radius20),
-                  color: Colors.white,
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage(
-                          "assets/img/hamburguesa_victoria.jpeg"
-                      )
+      children: [
+        // Logo restaurante
+        Container(
+          height: Get.context!.height/4.13,
+          margin: EdgeInsets.only(left: Dimensions.width10, right: Dimensions.width10),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(Dimensions.radius20),
+              color: Colors.white,
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage(
+                      restaurante.img_default
                   )
+              )
+          ),
+        ),
+        // Info restaurante
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            height: Get.context!.height/7.23,
+            margin: EdgeInsets.only(left: Dimensions.width30, right: Dimensions.width30, bottom: 5),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(Dimensions.radius30),
+              color: Colors.white,
+            ),
+            child: Container(
+              padding: EdgeInsets.only(top: Dimensions.height10, left: Dimensions.height20, right: Dimensions.height20, bottom: Dimensions.height10),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      BigText(text: restaurante.nombre)
+                    ],
+                  ),
+                  SizedBox(height: Dimensions.height10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      IconAndTextWidget(icon: Icons.location_pin, text: restaurante.direccion, textColor: AppColors.textColor, iconColor: AppColors.iconColor1)
+                    ],
+                  ),
+                  SizedBox(height: Dimensions.height10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconAndTextWidget(icon: Icons.phone_android_rounded, text: restaurante.telefono, textColor: AppColors.textColor, iconColor: AppColors.iconColor2),
+                      IconAndTextWidget(icon: Icons.timer, text: restaurante.codigo_postal, textColor: AppColors.textColor, iconColor: AppColors.iconColor2)
+                    ],
+                  )
+                ],
               ),
             ),
-            //Info restaurante
-            Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  height: Get.context!.height/7.23,
-                  margin: EdgeInsets.only(left: Dimensions.width30, right: Dimensions.width30, bottom: 5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(Dimensions.radius30),
-                    color: Colors.white,
-                  ),
-                  child: Container(
-                    padding: EdgeInsets.only(top: Dimensions.height10, left: Dimensions.height20, right: Dimensions.height20, bottom: Dimensions.height10),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            BigText(text: "Bar Victoria")
-                          ],
-                        ),
-                        SizedBox(height: Dimensions.height10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            IconAndTextWidget(icon: Icons.location_pin, text: "Calle Jacinto Benavente, 13", textColor: AppColors.textColor, iconColor: AppColors.iconColor1)
-                          ],
-                        ),
-                        SizedBox(height: Dimensions.height10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IconAndTextWidget(icon: Icons.phone_android_rounded, text: "650 324 508", textColor: AppColors.textColor, iconColor: AppColors.iconColor2),
-                            IconAndTextWidget(icon: Icons.timer, text: "45min", textColor: AppColors.textColor, iconColor: AppColors.iconColor2)
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                )
-            )
-          ],
-        );
+          ),
+        )
+      ],
+    );
   }
 }
+
 
