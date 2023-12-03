@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../models/usuario.dart';
+import '../../utils/colors.dart';
 
 class PerfilPage extends StatefulWidget {
   @override
@@ -18,108 +21,224 @@ class _PerfilPageState extends State<PerfilPage> {
   late String direccion;
   late bool isEditing;
   final formKey = GlobalKey<FormState>();
-
   List<String> misPedidos = ['Pedido 1', 'Pedido 2', 'Pedido 3'];
+  bool _valNotificaciones = true; //notificaciones
+
+  onChangeFunctionNotifications(bool newValue1){
+    setState(() {
+      _valNotificaciones = newValue1;
+      // PerfilRepositoryImpl().guardarHuelgas(_valNotificaciones);
+    });
+  }
+
+  Future<void> cargar_datos() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _valNotificaciones = prefs.getBool('Notificaciones') ?? true;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    cargar_datos();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Card(
-              elevation: 5.0,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Column(
-                          children: [
-                            Text(
-                              'Informacion del usuario',
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
-                              ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Card(
+                elevation: 5.0,
+                color: Colors.grey[300],
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Información del usuario',
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        Column(
-                          children: [
-                            IconButton(
+                          ),
+                          Column(
+                            children: [
+                              IconButton(
                                 onPressed: () {
                                   abrirEditar();
                                 },
-                                icon: Icon(Icons.edit)
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                    Divider(height: 15),
-                    Text('Nombre: John'),
-                    Text('Email: john@gmail.com'),
-                    Text('Dirección: Calle Principal, 123'),
-                  ],
+                                icon: Icon(Icons.edit),
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+
+                      Divider(height: 15, color: AppColors.mainBlackColor,),
+                      buildInfoField('Nombre', 'John'),
+                      buildInfoField('Apellidos', 'Dow'),
+                      buildInfoField('Email', 'john@gmail.com'),
+                      buildInfoField('Dirección', 'Calle Principal, 123'),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 16.0),
-            Card(
-              elevation: 5.0,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Column(
-                          children: [
-                            Text(
-                              'Mis Pedidos',
-                              style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
+              SizedBox(height: 15.0),
+              Card(
+                color: Colors.grey[300],
+                elevation: 5.0,
+                child: Container(
+                  height: 250.0, // Ajusta la altura del Card según tus preferencias
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Column(
+                            children: [
+                              Text(
+                                'Mis Pedidos',
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10,),
+                      // Lista de pedidos
+                      Container(
+                        height: 180.0, // Ajusta la altura de la lista según tus preferencias
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: misPedidos.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              margin: EdgeInsets.symmetric(vertical: 5.0),
+                              padding: EdgeInsets.all(2.0),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black), // Añade un borde
+                                borderRadius: BorderRadius.circular(8.0), // Bordes redondeados
+                              ),
+                              child: ListTile(
+                                title: Text(
+                                  misPedidos[index],
+                                  style: TextStyle(
+                                    color: Colors.black, // Cambia este color según tus preferencias
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  'Fecha: ${_obtenerFechaPedido(index)}',
+                                  style: TextStyle(
+                                    fontStyle: FontStyle.italic, // Añade más estilos según tus preferencias
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
                         ),
-                        Column(
-                          children: [
-                            IconButton(
-                                onPressed: () {
-                                  abrirEditar();
-                                },
-                                icon: Icon(Icons.edit)
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                    Divider(height: 15),
-                    // Lista de pedidos
-                    ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: misPedidos.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text(misPedidos[index]),
-                          subtitle: Text('Fecha: ${_obtenerFechaPedido(index)}'),
-                        );
-                      },
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+              SizedBox(height: 15.0),
+              Card(
+                color: Colors.grey[300],
+                elevation: 5.0,
+                child: Container(
+                  height: 140.0, // Ajusta la altura del Card según tus preferencias
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Column(
+                            children: [
+                              Text(
+                                'Configuración',
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Divider(height: 20, color: Colors.black,),
+                      // Lista de pedidos
+                      Container(
+                        height: 60.0, // Ajusta la altura de la lista según tus preferencias
+                        child: buildNotificacionOption("Recibir notificaciones", _valNotificaciones, onChangeFunctionNotifications),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+
+
+            ],
+          ),
         ),
+      ),
+    );
+  }
+
+  Padding buildNotificacionOption(String title, bool value, Function onChangeMethod){
+    return Padding(
+      padding: const EdgeInsets.only(top: 5, left: 5, right: 5),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(title, style: TextStyle(fontWeight: FontWeight.w800, color: Colors.grey[600]),),
+          Transform.scale(scale: 0.7, child: CupertinoSwitch(
+            activeColor: Colors.black,
+            trackColor: Colors.grey,
+            value: value,
+            onChanged: (bool newValue){
+              onChangeMethod(newValue);
+            },
+          ),)
+        ],
+      ),
+    );
+  }
+
+  Widget buildInfoField(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      child: Row(
+        children: [
+          Text(
+            '$label: ',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(value),
+        ],
       ),
     );
   }
@@ -140,6 +259,7 @@ class _PerfilPageState extends State<PerfilPage> {
       context: context,
       builder: (context) {
         return SimpleDialog(
+          backgroundColor: Colors.grey[300],
           title: const Text('Editar usuario'),
           children: <Widget>[
             form()
