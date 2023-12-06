@@ -18,6 +18,7 @@ dependencies:
   http: ^1.1.0
   curved_navigation_bar: ^1.0.3
   shared_preferences:
+  clip_shadowx: ^0.0.1
 
 
   # The following adds the Cupertino Icons font to your application.

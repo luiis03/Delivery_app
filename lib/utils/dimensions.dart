@@ -1,8 +1,13 @@
 import 'package:get/get.dart';
 
 class Dimensions {
-  static double screenHeight = Get.context!.height;
-  static double screenWidth = Get.context!.width;
+  static double screenHeight = 0.0;
+  static double screenWidth = 0.0;
+
+  static void init() {
+    screenHeight = Get.context!.height;
+    screenWidth = Get.context!.width;
+  }
 
   static double pageView = screenHeight/3.64;
   static double pageViewContainer = screenHeight/3.94;

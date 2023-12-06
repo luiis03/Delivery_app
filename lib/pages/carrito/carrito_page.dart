@@ -13,6 +13,7 @@ class CarritoPage extends StatefulWidget {
 }
 
 class _CarritoPageState extends State<CarritoPage> {
+  static const routeName = "/carritoPage";
   List<Producto> carrito = [
     Producto(nombre: 'Producto 1', cantidad: 2, precio: 10.0),
     Producto(nombre: 'Producto 2', cantidad: 1, precio: 15.0),

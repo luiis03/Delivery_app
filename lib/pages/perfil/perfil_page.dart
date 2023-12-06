@@ -11,6 +11,7 @@ class PerfilPage extends StatefulWidget {
 }
 
 class _PerfilPageState extends State<PerfilPage> {
+  static const routeName = "/perfilPage";
   TextEditingController controllerNombre = TextEditingController();
   TextEditingController controllerApellidos = TextEditingController();
   TextEditingController controllerEmail = TextEditingController();

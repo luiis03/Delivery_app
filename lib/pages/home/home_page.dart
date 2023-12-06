@@ -15,6 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  static const routeName = "/homePage";
   TextEditingController searchController = TextEditingController();
   final int _currentIndex = 1;
   bool estaEnBaseDatos = false;

@@ -9,4 +9,5 @@ class AppColors {
   static const Color signColor = Color(0xFFa9a29f);
   static const Color titleColor = Color(0xFF5c524f);
   static const Color mainBlackColor = Color(0xFF332d2b);
+  static const Color naranja = Color.fromARGB(255, 255, 184, 51);
 }
