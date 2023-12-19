@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "341677541910",
+    "project_id": "vldelivery-a35a8",
+    "storage_bucket": "vldelivery-a35a8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:341677541910:android:db36f16f580b2b4d794337",
+        "android_client_info": {
+          "package_name": "com.dj.ser.vic.delivery_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCon1fRPKjQQdLQ9KirLlmuY5HhG8849vA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -19,6 +19,8 @@ dependencies:
   curved_navigation_bar: ^1.0.3
   shared_preferences:
   clip_shadowx: ^0.0.1
+  firebase_core: 2.24.2
+  firebase_auth: ^4.10.0
 
 
   # The following adds the Cupertino Icons font to your application.
