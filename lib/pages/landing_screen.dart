@@ -1,3 +1,5 @@
+import 'package:delivery_app/pages/signup_screen.dart';
+import 'package:delivery_app/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:clip_shadowx/clip_shadowx.dart';
 
@@ -10,103 +12,99 @@ class LandingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-          width: Dimensions.screenWidth,
-          height: Dimensions.screenHeight,
-          child: Stack(
-            children: [
-              Align(
-                alignment: Alignment.topCenter,
-                child: ClipShadow(
-                  clipper: CustomClipperAppBar(),
-                  shadows: [
-                    BoxShadow(
-                      color: AppColors.textColor,
-                      offset: Offset(0, 15),
-                      blurRadius: 10,
-                    ),
-                  ],
-                  child: Container(
-                    width: double.infinity,
-                    height: Dimensions.screenHeight * 0.5,
-                    decoration: ShapeDecoration(
-                      color: AppColors.naranja,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: Image.asset(
-                      "assets/img/logo_app.png",
-                      fit: BoxFit.cover,
-                    ),
+      body: Stack(
+        children: [
+          Align(
+            alignment: Alignment.topCenter,
+            child: ClipShadow(
+              clipper: CustomClipperAppBar(),
+              shadows: [
+                BoxShadow(
+                  color: AppColors.textColor,
+                  offset: Offset(0, 15),
+                  blurRadius: 10,
+                ),
+              ],
+              child: Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.6,
+                decoration: ShapeDecoration(
+                  color: AppColors.naranja,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
               ),
-              Align(
-                alignment: Alignment.center,
-                child: Image.asset(
-                  "assets/img/logo_app.png",
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  width: double.infinity,
-                  height: Dimensions.screenHeight * 0.3,
-                  padding: const EdgeInsets.symmetric(horizontal: 40),
-                  child: Column(
-                    children: [
-                      Flexible(
-                        child: Text(
-                          "Discover the best foods from over 1,000 restaurants and fast delivery to your doorstep",
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      Spacer(
-                        flex: 2,
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 50,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context)
-                                .pushReplacementNamed(LoginScreen.routeName);
-                          },
-                          child: Text("Login"),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 50,
-                        child: ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor:
-                            MaterialStateProperty.all(Colors.white),
-                            foregroundColor:
-                            MaterialStateProperty.all(AppColors.naranja),
-                            shape: MaterialStateProperty.all(
-                              StadiumBorder(
-                                side:
-                                BorderSide(color: AppColors.naranja, width: 1.5),
-                              ),
-                            ),
-                          ),
-                          onPressed: () {},
-                          child: Text("Create an Account"),
-                        ),
-                      ),
-                      Spacer(),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
-        ));
+          Align(
+            alignment: Alignment.center,
+            child: Image.asset(
+              "assets/img/logo_app.png",
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height * 0.4,
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              child: Column(
+                children: [
+
+                  Spacer(
+                    flex: 1,
+                  ),
+                  Flexible(
+                    child: Text(
+                      "Descubre los mejores restaurantes de la zona a un solo click de distancia",
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        context.push(LoginScreen());
+                      },
+                      child: Text("Iniciar sesión"),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                        MaterialStateProperty.all(Colors.white),
+                        foregroundColor:
+                        MaterialStateProperty.all(AppColors.naranja),
+                        shape: MaterialStateProperty.all(
+                          StadiumBorder(
+                            side: BorderSide(
+                                color: AppColors.naranja, width: 1.5),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        context.push(SignUpScreen());
+                      },
+                      child: Text("Registrar"),
+                    ),
+                  ),
+                  Spacer(),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 

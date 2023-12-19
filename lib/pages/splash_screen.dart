@@ -1,8 +1,7 @@
 import 'dart:async';
 
+import 'package:delivery_app/utils/helper.dart';
 import 'package:flutter/material.dart';
-
-import '../utils/dimensions.dart';
 import 'landing_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -11,33 +10,32 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  static const routeName = "/splashScreen";
-  late Timer _timer;
 
   @override
   void initState() {
-    _timer = Timer(Duration(milliseconds: 3000), () {
-      Navigator.of(context).pushReplacementNamed(LandingScreen.routeName);
-    });
+    load();
     super.initState();
+  }
+
+  void load() async {
+    await Future.delayed(const Duration(seconds: 3));
+    loadNextScreen();
+  }
+
+  void loadNextScreen() {
+    context.push(LandingScreen());
+    print('SplashScreen');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: Dimensions.screenWidth,
-        height: Dimensions.screenHeight,
-        child: Stack(
+      body: Stack(
           children: [
-            Text("HOLA"),
             Container(
               height: double.infinity,
               width: double.infinity,
-              child: Image.asset(
-                "assets/img/logo_app.png",
-                fit: BoxFit.fill,
-              ),
+              color: Colors.amber,
             ),
             Align(
               alignment: Alignment.center,
@@ -47,7 +45,6 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
           ],
         ),
-      ),
     );
   }
 }

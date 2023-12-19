@@ -1,4 +1,6 @@
+import 'package:delivery_app/pages/home/home_page.dart';
 import 'package:delivery_app/pages/signup_screen.dart';
+import 'package:delivery_app/utils/helper.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/colors.dart';
@@ -13,8 +15,8 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        height: Dimensions.screenHeight,
-        width: Dimensions.screenWidth,
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
         child: SafeArea(
           child: Container(
             padding: const EdgeInsets.symmetric(
@@ -42,15 +44,16 @@ class LoginScreen extends StatelessWidget {
                   height: 50,
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.push(HomePage());
+                    },
                     child: Text("Login"),
                   ),
                 ),
                 Spacer(),
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context)
-                        .pushReplacementNamed(ForgetPwScreen.routeName);
+                    context.push(ForgetPwScreen());
                   },
                   child: Text("Forget your password?"),
                 ),
@@ -117,8 +120,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.of(context)
-                        .pushReplacementNamed(SignUpScreen.routeName);
+                    context.push(SignUpScreen());
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

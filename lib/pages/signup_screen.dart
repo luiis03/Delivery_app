@@ -1,4 +1,5 @@
 import 'package:delivery_app/utils/colors.dart';
+import 'package:delivery_app/utils/helper.dart';
 import 'package:flutter/material.dart';
 import '../utils/dimensions.dart';
 import '../widgets/custom_text_input.dart';
@@ -10,8 +11,8 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-          width: Dimensions.screenWidth,
-          height: Dimensions.screenHeight,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
           child: SafeArea(
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
@@ -25,17 +26,17 @@ class SignUpScreen extends StatelessWidget {
                   Text(
                     "Add your details to sign up",
                   ),
-                  Spacer(),
+                  SizedBox(height: 30),
                   CustomTextInput(hintText: "Nombre", key: Key("nombre"),),
-                  Spacer(),
+                  SizedBox(height: 20),
                   CustomTextInput(hintText: "Email", key: Key("email"),),
-                  Spacer(),
+                  SizedBox(height: 20),
                   CustomTextInput(hintText: "Telefono", key: Key("telefono"),),
-                  Spacer(),
+                  SizedBox(height: 20),
                   CustomTextInput(hintText: "Direccion", key: Key("direccion"),),
-                  Spacer(),
+                  SizedBox(height: 20),
                   CustomTextInput(hintText: "Contraseña", key: Key("contraseña"),),
-                  Spacer(),
+                  SizedBox(height: 20),
                   CustomTextInput(hintText: "Confirmar contraseña", key: Key("confirmar contraseña"),),
                   Spacer(),
                   SizedBox(
@@ -49,8 +50,7 @@ class SignUpScreen extends StatelessWidget {
                   Spacer(),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context)
-                          .pushReplacementNamed(LoginScreen.routeName);
+                      context.push(LoginScreen());
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
