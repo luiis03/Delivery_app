@@ -39,13 +39,14 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false, // Desactivar el botón de retroceso
         backgroundColor: AppColors.mainBlackColor,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               children: [
-                BigText(text: "Direccion", color: AppColors.mainColor),
+                Text("Direccion"),
               ],
             ),
             customSwitch(),

@@ -23,17 +23,14 @@ class SignUpScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   Spacer(),
-                  Text(
-                    "Add your details to sign up",
-                  ),
                   SizedBox(height: 30),
                   CustomTextInput(hintText: "Nombre", key: Key("nombre"),),
                   SizedBox(height: 20),
                   CustomTextInput(hintText: "Email", key: Key("email"),),
                   SizedBox(height: 20),
-                  CustomTextInput(hintText: "Telefono", key: Key("telefono"),),
+                  CustomTextInput(hintText: "Teléfono", key: Key("telefono"),),
                   SizedBox(height: 20),
-                  CustomTextInput(hintText: "Direccion", key: Key("direccion"),),
+                  CustomTextInput(hintText: "Dirección", key: Key("direccion"),),
                   SizedBox(height: 20),
                   CustomTextInput(hintText: "Contraseña", key: Key("contraseña"),),
                   SizedBox(height: 20),
@@ -44,7 +41,7 @@ class SignUpScreen extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: () {},
-                      child: Text("Sign Up"),
+                      child: Text("Registrarse"),
                     ),
                   ),
                   Spacer(),
@@ -55,7 +52,7 @@ class SignUpScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Already have an Account?"),
+                        Text("¿Ya tienes una cuenta?"),
                         Text(
                           "Login",
                           style: TextStyle(

@@ -9,8 +9,8 @@ class ForgetPwScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        width: Dimensions.screenWidth,
-        height: Dimensions.screenHeight,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         child: SafeArea(
           child: Container(
             padding: const EdgeInsets.symmetric(

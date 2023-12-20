@@ -77,76 +77,82 @@ class _SliderCatalogoPageState extends State<SliderCatalogoPage> {
 
   Widget _buildPageItem(int position) {
     Restaurantes restaurante = restaurantes[position];
+    final double containerHeight1 = 220; // Ajusta según sea necesario
+    final double containerHeight2 = 120; // Ajusta según sea necesario
+
     return Stack(
       children: [
         // Logo restaurante
         Container(
-          height: Get.context!.height / 4.13,
-          margin: EdgeInsets.only(
-              left: Dimensions.width10, right: Dimensions.width10),
+          height: containerHeight1,
+          margin: EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(Dimensions.radius20),
-              color: Colors.white,
-              image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: AssetImage(restaurante.img_default))),
+            borderRadius: BorderRadius.circular(20),
+            color: Colors.white,
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage(restaurante.img_default),
+            ),
+          ),
         ),
         // Info restaurante
         Align(
           alignment: Alignment.bottomCenter,
           child: Container(
-            height: Get.context!.height / 7.23,
-            margin: EdgeInsets.only(
-                left: Dimensions.width30, right: Dimensions.width30, bottom: 5),
+            height: containerHeight2,
+            margin: EdgeInsets.symmetric(horizontal: 30, vertical: 5),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(Dimensions.radius30),
+              borderRadius: BorderRadius.circular(30),
               color: Colors.white,
             ),
-            child: Container(
-              padding: EdgeInsets.only(
-                  top: Dimensions.height10,
-                  left: Dimensions.height20,
-                  right: Dimensions.height20,
-                  bottom: Dimensions.height10),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 10,
+                horizontal: 20,
+              ),
               child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [BigText(text: restaurante.nombre)],
+                    children: [Text(restaurante.nombre)],
                   ),
-                  SizedBox(height: Dimensions.height10),
+                  SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       IconAndTextWidget(
-                          icon: Icons.location_pin,
-                          text: restaurante.direccion,
-                          textColor: AppColors.textColor,
-                          iconColor: AppColors.iconColor1)
+                        icon: Icons.location_pin,
+                        text: restaurante.direccion,
+                        textColor: AppColors.textColor,
+                        iconColor: AppColors.iconColor1,
+                      ),
                     ],
                   ),
-                  SizedBox(height: Dimensions.height10),
+                  SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconAndTextWidget(
-                          icon: Icons.phone_android_rounded,
-                          text: restaurante.telefono,
-                          textColor: AppColors.textColor,
-                          iconColor: AppColors.iconColor2),
+                        icon: Icons.phone_android_rounded,
+                        text: restaurante.telefono,
+                        textColor: AppColors.textColor,
+                        iconColor: AppColors.iconColor2,
+                      ),
                       IconAndTextWidget(
-                          icon: Icons.timer,
-                          text: restaurante.codigo_postal ?? '',
-                          textColor: AppColors.textColor,
-                          iconColor: AppColors.iconColor2)
+                        icon: Icons.timer,
+                        text: restaurante.codigo_postal ?? '',
+                        textColor: AppColors.textColor,
+                        iconColor: AppColors.iconColor2,
+                      ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
           ),
-        )
+        ),
       ],
     );
   }
+
 }

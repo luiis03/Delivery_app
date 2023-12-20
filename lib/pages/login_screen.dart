@@ -1,4 +1,5 @@
 import 'package:delivery_app/pages/home/home_page.dart';
+import 'package:delivery_app/pages/home/main_page.dart';
 import 'package:delivery_app/pages/signup_screen.dart';
 import 'package:delivery_app/utils/helper.dart';
 import 'package:flutter/material.dart';
@@ -29,15 +30,13 @@ class LoginScreen extends StatelessWidget {
                   "Login",
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
-                Spacer(),
-                Text('Add your details to login'),
-                Spacer(),
+                Spacer(flex: 2),
                 CustomTextInput(
-                  hintText: "Your email", key: Key("email"),
+                  hintText: "Email", key: Key("email"),
                 ),
                 Spacer(),
                 CustomTextInput(
-                  hintText: "password", key: Key("password"),
+                  hintText: "Contraseña", key: Key("password"),
                 ),
                 Spacer(),
                 SizedBox(
@@ -45,9 +44,9 @@ class LoginScreen extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      context.push(HomePage());
+                      context.pushReplacement(MainPage());
                     },
-                    child: Text("Login"),
+                    child: Text("Iniciar sesión"),
                   ),
                 ),
                 Spacer(),
@@ -55,51 +54,17 @@ class LoginScreen extends StatelessWidget {
                   onTap: () {
                     context.push(ForgetPwScreen());
                   },
-                  child: Text("Forget your password?"),
+                  child: Text("¿Has olvidado tu contraseña?"),
                 ),
                 Spacer(
                   flex: 2,
                 ),
-                Text("or Login With"),
+                Text("o Inicia sesión con"),
                 Spacer(),
                 SizedBox(
                   height: 50,
                   width: double.infinity,
                   child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                        Color(
-                          0xFF367FC0,
-                        ),
-                      ),
-                    ),
-                    onPressed: () {},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          "assets/img/logo_google.png"
-                        ),
-                        SizedBox(
-                          width: 30,
-                        ),
-                        Text("Login with Facebook")
-                      ],
-                    ),
-                  ),
-                ),
-                Spacer(),
-                SizedBox(
-                  height: 50,
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                        Color(
-                          0xFFDD4B39,
-                        ),
-                      ),
-                    ),
                     onPressed: () {},
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -110,7 +75,7 @@ class LoginScreen extends StatelessWidget {
                         SizedBox(
                           width: 30,
                         ),
-                        Text("Login with Google")
+                        Text("Iniciar con Google")
                       ],
                     ),
                   ),
@@ -125,9 +90,9 @@ class LoginScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Don't have an Account?"),
+                      Text("Si no tienes cuenta..."),
                       Text(
-                        "Sign Up",
+                        "Regístrate",
                         style: TextStyle(
                           color: AppColors.naranja,
                           fontWeight: FontWeight.bold,
