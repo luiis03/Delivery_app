@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../pages/home/main_page.dart';
+
 class Helper {
   static double getScreenWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;
@@ -40,6 +42,17 @@ extension AppContext on BuildContext {
       ),
     );
   }
+
+  Future<void> navigateToMainPage(BuildContext context) async {
+    await Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MainPage(),
+      ),
+          (route) => true, // Elimina todas las rutas anteriores
+    );
+  }
+
 
   void pop() async {
     return Navigator.pop(this);

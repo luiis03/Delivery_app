@@ -1,4 +1,6 @@
+import 'package:delivery_app/pages/home/restaurante_page.dart';
 import 'package:delivery_app/pages/home/slider_catalogo_page.dart';
+import 'package:delivery_app/utils/helper.dart';
 import 'package:delivery_app/widgets/search_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -116,6 +118,7 @@ class _HomePageState extends State<HomePage> {
                           color: estaEnBaseDatos ? Colors.red : null,
                         ),
                       ),
+                      onTap: () => context.pushReplacement(RestaurantePage(restaurantes: restaurante)),
                     ),
                   ),
                 );

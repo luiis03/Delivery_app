@@ -44,7 +44,7 @@ class LoginScreen extends StatelessWidget {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      context.pushReplacement(MainPage());
+                      context.navigateToMainPage(context);
                     },
                     child: Text("Iniciar sesión"),
                   ),

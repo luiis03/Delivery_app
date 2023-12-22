@@ -1,3 +1,5 @@
+import 'package:delivery_app/models/producto.dart';
+
 import 'menus.dart';
 
 class Restaurantes {
@@ -12,7 +14,7 @@ class Restaurantes {
   final String logo_imagen;
   final String img_default;
   final String tiempo_estimado;
-  final List<dynamic> menus;
+  final List<Producto> productos;
 
   Restaurantes({
     required this.id,
@@ -26,7 +28,7 @@ class Restaurantes {
     required this.logo_imagen,
     required this.img_default,
     required this.tiempo_estimado,
-    required this.menus
+    required this.productos
   });
 
 }

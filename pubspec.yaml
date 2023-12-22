@@ -21,6 +21,7 @@ dependencies:
   clip_shadowx: ^0.0.1
   firebase_core: 2.24.2
   firebase_auth: ^4.10.0
+  carousel_slider: ^4.2.1
 
 
   # The following adds the Cupertino Icons font to your application.

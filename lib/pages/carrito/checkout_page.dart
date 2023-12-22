@@ -1,20 +1,18 @@
-import 'package:delivery_app/utils/helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/producto.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
-import 'checkout_page.dart';
 
-class CarritoPage extends StatefulWidget {
-  const CarritoPage({Key? key}) : super(key: key);
+class CheckoutPage extends StatefulWidget {
+  const CheckoutPage({Key? key}) : super(key: key);
 
   @override
-  _CarritoPageState createState() => _CarritoPageState();
+  _CheckoutPageState createState() => _CheckoutPageState();
 }
 
-class _CarritoPageState extends State<CarritoPage> {
+class _CheckoutPageState extends State<CheckoutPage> {
   List<Producto> carrito = [
     Producto(nombre: 'Productoasdaasdasdasdsasdsd 1', cantidad: 2, precio: 10.0, id: 1, imagen: "assets/img/hamburguesa_victoria.jpeg"),
     Producto(nombre: 'Producto 2', cantidad: 1, precio: 15.0, id: 1, imagen: "assets/img/hamburguesa_victoria.jpeg"),
@@ -88,7 +86,7 @@ class _CarritoPageState extends State<CarritoPage> {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(Dimensions.radius20),
                                     child: Image.asset(
-                                      carrito[index].imagen,
+                                      "assets/img/hamburguesa_victoria.jpeg",
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -192,7 +190,6 @@ class _CarritoPageState extends State<CarritoPage> {
                               ),
                               onPressed: () {
                                 // Navegar a la pantalla de finalización del pedido
-                                context.pushReplacement(CheckoutPage());
                               },
                               child: Text('Terminar Pedido',
                                 style: TextStyle(

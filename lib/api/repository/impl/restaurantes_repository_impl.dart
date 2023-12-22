@@ -4,6 +4,8 @@ import 'package:delivery_app/api/repository/restaurantes_repository.dart';
 import 'package:delivery_app/models/restaurantes.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../models/producto.dart';
+
 class RestaurantesRepositoryImpl implements RestaurantesRepository {
   @override
   Future<List<Restaurantes>> getRestaurantes() async {
@@ -13,6 +15,14 @@ class RestaurantesRepositoryImpl implements RestaurantesRepository {
         var jsonData = jsonDecode(response.body);
         List<Restaurantes> fetchedRestaurantes = [];
         for (var restaurant in jsonData['restaurantes']) {
+          List<Producto> productos = (restaurant['productos'] as List)
+              .map((producto) => Producto(
+            id: producto['id'],
+            nombre: producto['nombre'],
+            precio: producto['precio'],
+            cantidad: producto['cantidad'],
+            imagen: producto['imagen'],
+          )).toList();
           final restaurante = Restaurantes(
             id: restaurant['id'],
             nombre: restaurant['nombre'],
@@ -25,7 +35,7 @@ class RestaurantesRepositoryImpl implements RestaurantesRepository {
             logo_imagen: restaurant['logo_imagen'],
             img_default: restaurant['img_default'],
             tiempo_estimado: restaurant['tiempo_estimado'],
-            menus: restaurant['menus'],
+            productos: productos,
           );
           fetchedRestaurantes.add(restaurante);
         }
