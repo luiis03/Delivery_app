@@ -33,8 +33,7 @@ class _SliderCatalogoPageState extends State<SliderCatalogoPage> {
   }
 
   Future<void> cargarRestaurantes() async {
-    List<Restaurantes> restaurantes =
-        await RestaurantesRepositoryImpl().getRestaurantes();
+    List<Restaurantes> restaurantes = await RestaurantesRepositoryImpl().getRestaurantes();
     setState(() {
       this.restaurantes = restaurantes;
     });
@@ -45,7 +44,7 @@ class _SliderCatalogoPageState extends State<SliderCatalogoPage> {
     return Column(
       children: [
         Container(
-          color: AppColors.mainBlackColor,
+          color: AppColors.buttonBackgroundColor,
           height: 280,
           child: PageView.builder(
             controller: pageController,
@@ -60,17 +59,18 @@ class _SliderCatalogoPageState extends State<SliderCatalogoPage> {
             },
           ),
         ),
-        DotsIndicator(
-          dotsCount: restaurantes.length,
-          position: _currentPage.toInt(),
-          decorator: DotsDecorator(
-            activeColor: AppColors.mainColor,
-            size: const Size.square(9.0),
-            activeSize: const Size(18.0, 9.0),
-            activeShape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0)),
+        if (restaurantes.isNotEmpty)
+          DotsIndicator(
+            dotsCount: restaurantes.length,
+            position: _currentPage.toInt(),
+            decorator: DotsDecorator(
+              activeColor: AppColors.naranja,
+              size: const Size.square(9.0),
+              activeSize: const Size(18.0, 9.0),
+              activeShape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0)),
+            ),
           ),
-        ),
       ],
     );
   }
@@ -114,9 +114,18 @@ class _SliderCatalogoPageState extends State<SliderCatalogoPage> {
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [Text(restaurante.nombre)],
+                    children: [
+                      Text(
+                        restaurante.nombre,
+                        style: TextStyle(
+                          fontSize: 18, // Ajusta el tamaño del texto según sea necesario
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 10),
+                  Divider(height: 10),
+                  SizedBox(height: 5),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [

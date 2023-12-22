@@ -12,8 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-import '../../models/restaurantes.dart';
-import '../../utils/dimensions.dart';
 import '../carrito/carrito_page.dart';
 import 'home_page.dart';
 
@@ -28,6 +26,7 @@ class _MainPageState extends State<MainPage> {
   TextEditingController searchController = TextEditingController();
   int _currentIndex = 1;
   bool switchValue = false;
+  String selectedAddress = "Dirección 1";
 
   @override
   void initState() {
@@ -39,19 +38,54 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false, // Desactivar el botón de retroceso
-        backgroundColor: AppColors.mainBlackColor,
+        automaticallyImplyLeading: false,
+        backgroundColor: AppColors.buttonBackgroundColor,
+        shadowColor: AppColors.buttonBackgroundColor,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              children: [
-                Text("Direccion"),
+            Icon(Icons.location_on, size: 16, color: AppColors.naranja),
+            Expanded(child: PopupMenuButton<String>(
+              icon: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    selectedAddress.length > 15 ? selectedAddress.substring(0, 15) + '...' : selectedAddress,
+                    style: TextStyle(
+                        color: AppColors.naranja,
+                        fontSize: 17
+                    ),
+                  ),
+                  Icon(Icons.arrow_drop_down_rounded, size: 25, color: AppColors.naranja),
+                ],
+              ),
+              onSelected: (String result) {
+                setState(() {
+                  selectedAddress = result;
+                });
+              },
+              itemBuilder: (BuildContext context) => [
+                PopupMenuItem(
+                  value: "Dirección 1",
+                  child: Row(
+                    children: [
+                      Text("Dirección 1"),
+                    ],
+                  ),
+                ),
+                PopupMenuItem(
+                  value: "Dirección 2",
+                  child: Row(
+                    children: [
+                      Text("Dirección 2"),
+                    ],
+                  ),
+                ),
               ],
-            ),
+            )),
             customSwitch(),
           ],
-        ),
+        )
       ),
       bottomNavigationBar: wBottomNavigationBar(),
       body: IndexedStack(
@@ -67,21 +101,23 @@ class _MainPageState extends State<MainPage> {
 
   CurvedNavigationBar wBottomNavigationBar() {
     return CurvedNavigationBar(
-        height: 55,
-        color: AppColors.mainBlackColor,
-        backgroundColor: AppColors.mainColor,
-        animationCurve: Curves.easeInCubic,
-        animationDuration: const Duration(milliseconds: 400),
-        items: const <Widget>[
-          Icon(Icons.person, size: 30, color: AppColors.mainColor),
-          Icon(Icons.home, size: 30, color: AppColors.mainColor),
-          Icon(Icons.shopping_cart, size: 30, color: AppColors.mainColor),
-        ],
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
+      height: 55,
+      color: AppColors.buttonBackgroundColor,
+      backgroundColor: AppColors.naranja,
+      animationCurve: Curves.easeInCubic,
+      animationDuration: const Duration(milliseconds: 400),
+      items: const <Widget>[
+        Icon(Icons.person, size: 30, color: AppColors.naranja),
+        Icon(Icons.home, size: 30, color: AppColors.naranja),
+        Icon(Icons.shopping_cart, size: 30, color: AppColors.naranja),
+      ],
+      onTap: (index) {
+        setState(() {
+          _currentIndex = index;
         });
+      },
+      index: _currentIndex,
+    );
   }
 
   Center customSwitch() {
@@ -90,9 +126,9 @@ class _MainPageState extends State<MainPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(Icons.directions_walk,
-              color: switchValue ? Colors.grey : AppColors.mainColor),
+              color: switchValue ? Colors.grey : AppColors.naranja),
           CupertinoSwitch(
-            activeColor: AppColors.mainColor,
+            activeColor: AppColors.naranja,
             value: switchValue,
             onChanged: (value) {
               setState(() {
@@ -101,7 +137,7 @@ class _MainPageState extends State<MainPage> {
             },
           ),
           Icon(Icons.delivery_dining,
-              color: switchValue ? AppColors.mainColor : Colors.grey),
+              color: switchValue ? AppColors.naranja : Colors.grey),
         ],
       ),
     );

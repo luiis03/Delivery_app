@@ -1,3 +1,4 @@
+import 'package:delivery_app/utils/dimensions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -58,7 +59,7 @@ class _PerfilPageState extends State<PerfilPage> {
             children: [
               Card(
                 elevation: 5.0,
-                color: Colors.grey[300],
+                color: Colors.grey[200],
                 child: Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: Column(
@@ -93,7 +94,7 @@ class _PerfilPageState extends State<PerfilPage> {
                         ],
                       ),
 
-                      Divider(height: 15, color: AppColors.mainBlackColor,),
+                      Divider(height: 15, color: Colors.grey,),
                       buildInfoField('Nombre', 'John'),
                       buildInfoField('Apellidos', 'Dow'),
                       buildInfoField('Email', 'john@gmail.com'),
@@ -104,7 +105,7 @@ class _PerfilPageState extends State<PerfilPage> {
               ),
               SizedBox(height: 15.0),
               Card(
-                color: Colors.grey[300],
+                color: Colors.grey[200],
                 elevation: 5.0,
                 child: Container(
                   height: 250.0, // Ajusta la altura del Card según tus preferencias
@@ -139,14 +140,13 @@ class _PerfilPageState extends State<PerfilPage> {
                               margin: EdgeInsets.symmetric(vertical: 5.0),
                               padding: EdgeInsets.all(2.0),
                               decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black), // Añade un borde
-                                borderRadius: BorderRadius.circular(8.0), // Bordes redondeados
+                                color: AppColors.naranja,
+                                borderRadius: BorderRadius.circular(8),
                               ),
                               child: ListTile(
                                 title: Text(
                                   misPedidos[index],
                                   style: TextStyle(
-                                    color: Colors.black, // Cambia este color según tus preferencias
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -167,7 +167,7 @@ class _PerfilPageState extends State<PerfilPage> {
               ),
               SizedBox(height: 15.0),
               Card(
-                color: Colors.grey[300],
+                color: Colors.grey[200],
                 elevation: 5.0,
                 child: Container(
                   height: 140.0, // Ajusta la altura del Card según tus preferencias
@@ -190,7 +190,7 @@ class _PerfilPageState extends State<PerfilPage> {
                           ),
                         ],
                       ),
-                      Divider(height: 20, color: Colors.black,),
+                      Divider(height: 20, color: Colors.grey),
                       // Lista de pedidos
                       Container(
                         height: 60.0, // Ajusta la altura de la lista según tus preferencias
@@ -217,7 +217,7 @@ class _PerfilPageState extends State<PerfilPage> {
         children: [
           Text(title, style: TextStyle(fontWeight: FontWeight.w800, color: Colors.grey[600]),),
           Transform.scale(scale: 0.7, child: CupertinoSwitch(
-            activeColor: Colors.black,
+            activeColor: AppColors.naranja,
             trackColor: Colors.grey,
             value: value,
             onChanged: (bool newValue){

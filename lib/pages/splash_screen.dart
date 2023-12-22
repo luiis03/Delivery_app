@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:delivery_app/utils/colors.dart';
 import 'package:delivery_app/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'landing_screen.dart';
@@ -35,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Container(
               height: double.infinity,
               width: double.infinity,
-              color: Colors.amber,
+              color: AppColors.naranja,
             ),
             Align(
               alignment: Alignment.center,

@@ -39,12 +39,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: AppColors.mainBlackColor,
+        color: AppColors.buttonBackgroundColor,
         child: Column(
           children: [
+            SizedBox(height: 5),
             Row(
               children: [
-                SearchBarInput()
+                SearchBarInput(),
               ],
             ),
             SizedBox(height: 10),
@@ -77,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.all(5.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.grey[200],
+                      color: AppColors.naranja,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: ListTile(
@@ -86,7 +87,8 @@ class _HomePageState extends State<HomePage> {
                         height: 50, // Altura del contenedor del logo
                         margin: EdgeInsets.only(
                             left: Dimensions.width10,
-                            right: Dimensions.width10),
+                            right: Dimensions.width10
+                        ),
                         decoration: BoxDecoration(
                           borderRadius:
                           BorderRadius.circular(Dimensions.radius20),

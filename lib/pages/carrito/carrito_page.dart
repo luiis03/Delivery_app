@@ -13,9 +13,12 @@ class CarritoPage extends StatefulWidget {
 }
 
 class _CarritoPageState extends State<CarritoPage> {
-  static const routeName = "/carritoPage";
   List<Producto> carrito = [
-    Producto(nombre: 'Producto 1', cantidad: 2, precio: 10.0),
+    Producto(nombre: 'Productoasdaasdasdasdsasdsd 1', cantidad: 2, precio: 10.0),
+    Producto(nombre: 'Producto 2', cantidad: 1, precio: 15.0),
+    Producto(nombre: 'Producto 2', cantidad: 1, precio: 15.0),
+    Producto(nombre: 'Producto 2', cantidad: 1, precio: 15.0),
+    Producto(nombre: 'Producto 2', cantidad: 1, precio: 15.0),
     Producto(nombre: 'Producto 2', cantidad: 1, precio: 15.0),
   ];
 
@@ -29,10 +32,10 @@ class _CarritoPageState extends State<CarritoPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Card(
-                color: Colors.grey[300],
+                color: Colors.grey[200],
                 elevation: 5.0,
                 child: Container(
-                  height: 400.0,
+                  height: 500.0,
                   padding: const EdgeInsets.all(15.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,11 +57,11 @@ class _CarritoPageState extends State<CarritoPage> {
                       ),
                       Divider(
                         height: 15,
-                        color: Colors.black,
+                        color: Colors.grey,
                       ),
                       // Lista de productos
                       Container(
-                        height: 320.0,
+                        height: 430.0,
                         child: ListView.builder(
                           shrinkWrap: true,
                           itemCount: carrito.length,
@@ -68,17 +71,17 @@ class _CarritoPageState extends State<CarritoPage> {
                               margin: EdgeInsets.symmetric(vertical: 5.0),
                               padding: EdgeInsets.all(2.0),
                               decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black),
+                                color: AppColors.naranja,
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               child: ListTile(
-                                contentPadding: EdgeInsets.all(0), // Ajusta el espacio interno del ListTile
+                                contentPadding: EdgeInsets.all(3), // Ajusta el espacio interno del ListTile
                                 leading: Container(
                                   width: 70, // Ajusta el ancho del leading según tus preferencias
                                   height: 80, // Ajusta la altura del leading según tus preferencias
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(Dimensions.radius20),
-                                    border: Border.all(color: Colors.black), // Añade un borde
+                                    color: AppColors.naranja,
+                                    borderRadius: BorderRadius.circular(Dimensions.radius20), // Añade un borde
                                   ),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(Dimensions.radius20),
@@ -89,7 +92,7 @@ class _CarritoPageState extends State<CarritoPage> {
                                   ),
                                 ),
                                 title: Text(
-                                  carrito[index].nombre,
+                                  carrito[index].nombre.length > 20 ? carrito[index].nombre.substring(0, 15) + '...' : carrito[index].nombre,
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
@@ -144,56 +147,34 @@ class _CarritoPageState extends State<CarritoPage> {
                     ],
                   ),
                 ),
-              )
-
-
-              ,SizedBox(height: 60.0),
+              ),
+              SizedBox(height: 25),
               Card(
-                color: Colors.grey[300],
+                color: Colors.grey[200],
                 elevation: 5.0,
                 child: Container(
-                  height: 200.0,
+                  height: 150.0,
                   padding: const EdgeInsets.all(15.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Column(
-                            children: [
-                              Text(
-                                'Total',
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Divider(
-                        height: 15,
-                        color: Colors.black,
-                      ),
                       // Total
                       Container(
                         height: 120.0,
                         child: Column(
                           children: [
                             ListTile(
-                              tileColor: Colors.black, // Color de fondo del ListTile
+                              tileColor: AppColors.naranja, // Color de fondo del ListTile
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8.0), // Bordes redondeados del ListTile
-                                side: BorderSide(color: Colors.black), // Borde del ListTile
                               ),
                               title: Center(
                                 child: Text(
                                   'Total del Pedido: \$${calcularTotalCarrito()}',
                                   style: TextStyle(
-                                    color: Colors.white, // Color del texto
+                                    color: Colors.black, // Color del texto
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 18.0,
+                                    fontSize: 18,
                                   ),
                                 ),
                               ),
@@ -202,16 +183,21 @@ class _CarritoPageState extends State<CarritoPage> {
                             // Botón Terminar pedido
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.black, // Color de fondo del botón
+                                backgroundColor: AppColors.naranja, // Color de fondo del botón
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5.0), // Bordes redondeados del botón
-                                  side: BorderSide(color: Colors.black), // Borde del botón
+                                  borderRadius: BorderRadius.circular(5.0), // Bordes redondeados del botón// Borde del botón
                                 ),
                               ),
                               onPressed: () {
                                 // Navegar a la pantalla de finalización del pedido
                               },
-                              child: Text('Terminar Pedido', style: TextStyle(color: Colors.white)),
+                              child: Text('Terminar Pedido',
+                                style: TextStyle(
+                                  color: Colors.black, // Color del texto
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
+                              ),
                             ),
                           ],
                         ),
