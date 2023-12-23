@@ -1,3 +1,4 @@
+import 'package:delivery_app/config/router.dart';
 import 'package:delivery_app/firebase_options.dart';
 import 'package:delivery_app/pages/forget_pw_screen.dart';
 import 'package:delivery_app/pages/landing_screen.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         ),
         ),
         ),
+      // onGenerateRoute: AppRouter.onGenerateRoute,
       home: SplashScreen(),
     );
 

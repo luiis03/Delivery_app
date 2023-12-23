@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                           color: estaEnBaseDatos ? Colors.red : null,
                         ),
                       ),
-                      onTap: () => context.pushReplacement(RestaurantePage(restaurantes: restaurante)),
+                      onTap: () => context.push(RestaurantePage(restaurantes: restaurante)),
                     ),
                   ),
                 );

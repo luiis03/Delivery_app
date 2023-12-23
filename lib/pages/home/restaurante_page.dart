@@ -1,4 +1,5 @@
 import 'package:delivery_app/models/restaurantes.dart';
+import 'package:delivery_app/pages/home/producto_page.dart';
 import 'package:delivery_app/utils/helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,8 @@ class _RestaurantePageState extends State<RestaurantePage> {
             headerSliverBuilder: (context, innerBoxIsScrolled) {
               return [
                 SliverAppBar(
-                  expandedHeight: 220.0,
+                  backgroundColor: AppColors.naranja,
+                  expandedHeight: 180.0,
                   floating: false,
                   pinned: true,
                   flexibleSpace: FlexibleSpaceBar(
@@ -60,7 +62,8 @@ class _RestaurantePageState extends State<RestaurantePage> {
             body: SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(height: 10),
+                  SizedBox(height: 5),
+                  cardCarta(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -95,8 +98,6 @@ class _RestaurantePageState extends State<RestaurantePage> {
       ),
     );
   }
-
-
 
   Container cardRestaurante(Restaurantes restaurante) {
     return Container(
@@ -172,17 +173,28 @@ class _RestaurantePageState extends State<RestaurantePage> {
   Stack cardProducto(Producto producto) {
     return Stack(
       children: [
-        Container(
-          width: MediaQuery.of(context).size.width / 2.5,
-          height: 150,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10), // Ajusta el valor según sea necesario
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Image.asset(
-              producto.imagen,
-              fit: BoxFit.cover,
+        InkWell(
+          onTap: () {
+            // Navegar a la página ProductoPage y enviar la información del producto
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductoPage(producto: producto),
+              ),
+            );
+          },
+          child: Container(
+            width: MediaQuery.of(context).size.width / 2.5,
+            height: 150,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.asset(
+                producto.imagen,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),
@@ -219,7 +231,6 @@ class _RestaurantePageState extends State<RestaurantePage> {
       ],
     );
   }
-
 
   SizedBox carrouselProductos(Restaurantes restaurantes) {
     return SizedBox(
@@ -261,6 +272,33 @@ class _RestaurantePageState extends State<RestaurantePage> {
               ),
             onTap: () {},
             ),
+        ],
+      ),
+    );
+  }
+
+  SizedBox cardCarta() {
+    return SizedBox(
+      height: 80,
+      width: MediaQuery.of(context).size.width - 185,
+      child: Column(
+        children: [
+          ListTile(
+            tileColor: AppColors.naranja, // Color de fondo del ListTile
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0), // Bordes redondeados del ListTile
+            ),
+            leading: Icon(Icons.menu_book),
+            title: Text(
+              'Ver carta',
+              style: TextStyle(
+                color: Colors.black, // Color del texto
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            onTap: () {},
+          ),
         ],
       ),
     );

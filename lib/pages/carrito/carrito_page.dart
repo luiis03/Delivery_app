@@ -192,7 +192,7 @@ class _CarritoPageState extends State<CarritoPage> {
                               ),
                               onPressed: () {
                                 // Navegar a la pantalla de finalización del pedido
-                                context.pushReplacement(CheckoutPage());
+                                context.push(CheckoutPage());
                               },
                               child: Text('Terminar Pedido',
                                 style: TextStyle(

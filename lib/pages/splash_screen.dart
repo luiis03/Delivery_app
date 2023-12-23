@@ -25,7 +25,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void loadNextScreen() {
     context.push(LandingScreen());
-    print('SplashScreen');
   }
 
   @override
