@@ -111,9 +111,11 @@ class _CarritoPageState extends State<CarritoPage> {
                                   children: [
                                     IconButton(
                                       onPressed: () {
-                                        // Lógica para restar uno a la cantidad
+                                        setState(() {
+                                          restarCantidad(carrito[index].cantidad);
+                                        });
                                       },
-                                      icon: Icon(Icons.remove),
+                                      icon: Icon(Icons.remove_circle_outline),
                                     ),
                                     Container(
                                       width: 30,
@@ -122,22 +124,20 @@ class _CarritoPageState extends State<CarritoPage> {
                                         border: Border.all(color: Colors.black),
                                         color: Colors.black,
                                       ),
-                                      child: TextFormField(
-                                        initialValue: '1', // Puedes inicializarlo con la cantidad actual
-                                        textAlign: TextAlign.center,
-                                        keyboardType: TextInputType.number,
-                                        style: TextStyle(
-                                          backgroundColor: Colors.black,
-                                          color: Colors.white,
-                                          decoration: TextDecoration.none, // Elimina la línea de debajo del texto
+                                      child: Center(
+                                        child: Text(
+                                          carrito[index].cantidad.toString(),
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ),
                                     ),
                                     IconButton(
                                       onPressed: () {
-                                        // Lógica para sumar uno a la cantidad
+                                        sumarCantidad(carrito[index].cantidad);
                                       },
-                                      icon: Icon(Icons.add),
+                                      icon: Icon(Icons.add_circle_outline),
                                     ),
                                   ],
                                 ),
@@ -226,5 +226,15 @@ class _CarritoPageState extends State<CarritoPage> {
       total += (producto.cantidad * producto.precio);
     }
     return total;
+  }
+
+  void restarCantidad(int cantidadProducto) {
+    if (cantidadProducto > 1) {
+      cantidadProducto -= 1;
+    }
+  }
+
+  void sumarCantidad(int cantidadProducto) {
+    cantidadProducto += 1;
   }
 }

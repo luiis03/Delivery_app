@@ -18,6 +18,7 @@ void main() async{
 }
 
 class MyApp extends StatelessWidget {
+  // late ThemeData _themeData = ThemeData.dark();
   const MyApp({super.key});
 
   @override
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Delivery app',
       debugShowCheckedModeBanner: false,
-        theme: ThemeData(
+      theme: ThemeData(
         fontFamily: "Metropolis",
         primarySwatch: Colors.amber,
         useMaterial3: false,
@@ -37,14 +38,41 @@ class MyApp extends StatelessWidget {
           ),
         ),
         textButtonTheme: TextButtonThemeData(
-        style: ButtonStyle(
-        foregroundColor: MaterialStateProperty.all(AppColors.naranja),
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all(AppColors.naranja),
+          ),
         ),
+      ),
+      darkTheme: ThemeData.dark().copyWith(
+        primaryColor: Colors.black,
+        scaffoldBackgroundColor: Colors.black,
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.black,
+          foregroundColor: Colors.white,
         ),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          backgroundColor: Colors.black,
+          selectedItemColor: AppColors.naranja,
+          unselectedItemColor: Colors.white,
         ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(AppColors.naranja),
+            shape: MaterialStateProperty.all(const StadiumBorder()),
+            elevation: MaterialStateProperty.all(0),
+          ),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor: MaterialStateProperty.all(AppColors.naranja),
+          ),
+        ),
+      ),
+      themeMode: ThemeMode.light,
       // onGenerateRoute: AppRouter.onGenerateRoute,
       home: SplashScreen(),
     );
+
 
   }
 }
