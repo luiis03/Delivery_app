@@ -150,7 +150,7 @@ class _CarritoPageState extends State<CarritoPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 25),
+              SizedBox(height: 12),
               Card(
                 color: Colors.grey[200],
                 elevation: 5.0,

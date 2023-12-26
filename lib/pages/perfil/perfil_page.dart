@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../api/repository/impl/perfil_repository_impl.dart';
 import '../../models/usuario.dart';
 import '../../utils/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,6 +12,8 @@ class PerfilPage extends StatefulWidget {
   @override
   _PerfilPageState createState() => _PerfilPageState();
 }
+
+enum Tema {claro, oscuro}
 
 class _PerfilPageState extends State<PerfilPage> {
   static const routeName = "/perfilPage";
@@ -27,6 +30,7 @@ class _PerfilPageState extends State<PerfilPage> {
   final formKey = GlobalKey<FormState>();
   List<String> misPedidos = ['Pedido 1', 'Pedido 2', 'Pedido 3'];
   bool _valNotificaciones = true; //notificaciones
+  Tema _temaSeleccionado = Tema.claro;
 
   onChangeFunctionNotifications(bool newValue1){
     setState(() {
@@ -39,7 +43,19 @@ class _PerfilPageState extends State<PerfilPage> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       _valNotificaciones = prefs.getBool('Notificaciones') ?? true;
+      _temaSeleccionado = _obtenerTemaGuardado(prefs.getString('Tema'));
     });
+  }
+
+  Tema _obtenerTemaGuardado(String? tema) {
+    switch (tema) {
+      case 'Tema.claro':
+        return Tema.claro;
+      case 'Tema.oscuro':
+        return Tema.oscuro;
+      default:
+        return Tema.claro;
+    }
   }
 
   @override
@@ -170,7 +186,7 @@ class _PerfilPageState extends State<PerfilPage> {
                 color: Colors.grey[200],
                 elevation: 5.0,
                 child: Container(
-                  height: 140.0, // Ajusta la altura del Card según tus preferencias
+                  height: 160.0, // Ajusta la altura del Card según tus preferencias
                   padding: const EdgeInsets.all(15.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,9 +209,11 @@ class _PerfilPageState extends State<PerfilPage> {
                       Divider(height: 20, color: Colors.grey),
                       // Lista de pedidos
                       Container(
-                        height: 60.0, // Ajusta la altura de la lista según tus preferencias
+                        height: 30.0, // Ajusta la altura de la lista según tus preferencias
                         child: buildNotificacionOption("Recibir notificaciones", _valNotificaciones, onChangeFunctionNotifications),
                       ),
+                      SizedBox(height: 15),
+                      buildTemaOption(context, "Ajustes de tema",_temaSeleccionado),
                     ],
                   ),
                 ),
@@ -269,6 +287,66 @@ class _PerfilPageState extends State<PerfilPage> {
           ],
         );
       },
+    );
+  }
+
+  GestureDetector buildTemaOption(BuildContext context, String title, Tema tema) {
+    return GestureDetector(
+      onTap: () async {
+        final seleccionado = await showDialog<Tema>(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text(title),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  RadioListTile<Tema>(
+                    title: const Text("Tema claro"),
+                    value: Tema.claro,
+                    groupValue: tema,
+                    onChanged: (Tema? val) {
+                      Navigator.of(context).pop(val);
+                    },
+                  ),
+                  RadioListTile<Tema>(
+                    title: const Text("Tema oscuro"),
+                    value: Tema.oscuro,
+                    groupValue: tema,
+                    onChanged: (Tema? val) {
+                      Navigator.of(context).pop(val);
+                    },
+                  ),
+                ],
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("Cerrar"),
+                )
+              ],
+            );
+          },
+        );
+        if (seleccionado != null) {
+          setState(() {
+            _temaSeleccionado = seleccionado;
+          });
+          PerfilRepositoryImpl().guardarTema(_temaSeleccionado);
+        }
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(title, style: TextStyle(fontWeight: FontWeight.w800, color: Colors.grey[600])),
+            const Icon(Icons.arrow_forward_ios, color: Colors.grey),
+          ],
+        ),
+      ),
     );
   }
 

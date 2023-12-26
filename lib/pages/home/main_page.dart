@@ -11,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:icon_badge/icon_badge.dart';
 
 import '../carrito/carrito_page.dart';
 import 'home_page.dart';
@@ -109,7 +110,13 @@ class _MainPageState extends State<MainPage> {
       items: const <Widget>[
         Icon(Icons.person, size: 30, color: AppColors.naranja),
         Icon(Icons.home, size: 30, color: AppColors.naranja),
-        Icon(Icons.shopping_cart, size: 30, color: AppColors.naranja),
+        IconBadge(
+          icon: Icon(Icons.shopping_cart, color: AppColors.naranja),
+          itemCount: 2,
+          badgeColor: Colors.black,
+          itemColor: Colors.white,
+          hideZero: true,
+        ),
       ],
       onTap: (index) {
         setState(() {
@@ -119,6 +126,7 @@ class _MainPageState extends State<MainPage> {
       index: _currentIndex,
     );
   }
+
 
   Center customSwitch() {
     return Center(
