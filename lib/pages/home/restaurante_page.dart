@@ -3,6 +3,7 @@ import 'package:delivery_app/pages/home/producto_page.dart';
 import 'package:delivery_app/utils/helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:icon_badge/icon_badge.dart';
 
 import '../../api/repository/impl/restaurantes_repository_impl.dart';
 import '../../models/producto.dart';
@@ -41,6 +42,18 @@ class _RestaurantePageState extends State<RestaurantePage> {
                   expandedHeight: 180.0,
                   floating: false,
                   pinned: true,
+                  actions: [
+                    Center(
+                      child: IconBadge(
+                        icon: Icon(Icons.shopping_cart_outlined, color: Colors.black),
+                        itemCount: 2,
+                        badgeColor: Colors.black,
+                        itemColor: Colors.white,
+                        hideZero: true,
+                      ),
+                    ),
+                    SizedBox(width: 5)
+                  ],
                   flexibleSpace: FlexibleSpaceBar(
                     title: Text(widget.restaurantes.nombre),
                     background: Container(
@@ -261,7 +274,7 @@ class _RestaurantePageState extends State<RestaurantePage> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0), // Bordes redondeados del ListTile
             ),
-            leading: Icon(Icons.shopping_bag_rounded),
+            leading: Icon(Icons.shopping_cart_outlined),
             title: Text(
                 'Añade comida al carrito',
                 style: TextStyle(
@@ -279,8 +292,8 @@ class _RestaurantePageState extends State<RestaurantePage> {
 
   SizedBox cardCarta() {
     return SizedBox(
-      height: 80,
-      width: MediaQuery.of(context).size.width - 185,
+      height: 70,
+      width: MediaQuery.of(context).size.width - 205,
       child: Column(
         children: [
           ListTile(

@@ -2,6 +2,7 @@ import 'package:delivery_app/pages/home/restaurante_page.dart';
 import 'package:delivery_app/utils/helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:icon_badge/icon_badge.dart';
 
 import '../../models/producto.dart';
 import '../../utils/colors.dart';
@@ -43,19 +44,15 @@ class _ProductoPageState extends State<ProductoPage> {
                   pinned: true,
                   actions: [
                     Center(
-                      child: Badge(
-                        // badgeContent: Consumer<CartProvider>(
-                        //   builder: (context, value, child) {
-                        //     return Text(value.getCounter().toString(),
-                        //         style: TextStyle(color: Colors.white));
-                        //   },
-                        // ),
-                        // animationDuration: Duration(milliseconds: 300),
-                        // animationType: BadgeAnimationType.slide,
-                        child: Icon(Icons.shopping_bag_outlined),
+                      child: IconBadge(
+                        icon: Icon(Icons.shopping_cart_outlined, color: Colors.white),
+                        itemCount: 2,
+                        badgeColor: Colors.black,
+                        itemColor: Colors.white,
+                        hideZero: true,
                       ),
                     ),
-                    SizedBox(width: 20.0)
+                    SizedBox(width: 5)
                   ],
                   actionsIconTheme: IconThemeData(size: 20, color: Colors.white),
                   flexibleSpace: FlexibleSpaceBar(
@@ -232,11 +229,10 @@ class _ProductoPageState extends State<ProductoPage> {
     );
   }
 
-
   Container cardCarrito() {
     return Container(
       height: 60,
-      width: MediaQuery.of(context).size.width - 75,
+      width: MediaQuery.of(context).size.width - 125,
       decoration: BoxDecoration(
         color: AppColors.naranja,
         borderRadius: BorderRadius.circular(8.0),
@@ -252,9 +248,9 @@ class _ProductoPageState extends State<ProductoPage> {
           ),
         ),
         child: ListTile(
-          leading: Icon(Icons.shopping_bag_rounded),
+          leading: Icon(Icons.shopping_cart_outlined),
           title: Text(
-            'Añade comida al carrito',
+            'Añadir al carrito',
             style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,

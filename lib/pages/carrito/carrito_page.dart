@@ -43,6 +43,7 @@ class _CarritoPageState extends State<CarritoPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
                             children: [
@@ -55,6 +56,7 @@ class _CarritoPageState extends State<CarritoPage> {
                               ),
                             ],
                           ),
+                          Icon(Icons.shopping_cart_outlined)
                         ],
                       ),
                       Divider(

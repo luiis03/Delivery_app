@@ -25,6 +25,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.naranja,
+        automaticallyImplyLeading: true,
+        centerTitle: true,
+        title: Text("Checkout"),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -41,6 +47,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
                             children: [
@@ -53,6 +60,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                               ),
                             ],
                           ),
+                          Icon(Icons.shopping_cart_outlined)
                         ],
                       ),
                       Divider(
@@ -75,16 +83,16 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               child: ListTile(
-                                contentPadding: EdgeInsets.all(3), // Ajusta el espacio interno del ListTile
+                                contentPadding: EdgeInsets.fromLTRB(12, 5, 12, 8), // Ajusta los valores según tus preferencias
                                 leading: Container(
                                   width: 70, // Ajusta el ancho del leading según tus preferencias
                                   height: 80, // Ajusta la altura del leading según tus preferencias
                                   decoration: BoxDecoration(
                                     color: AppColors.naranja,
-                                    borderRadius: BorderRadius.circular(Dimensions.radius20), // Añade un borde
+                                    borderRadius: BorderRadius.circular(20), // Añade un borde
                                   ),
                                   child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(Dimensions.radius20),
+                                    borderRadius: BorderRadius.circular(10),
                                     child: Image.asset(
                                       "assets/img/hamburguesa_victoria.jpeg",
                                       fit: BoxFit.cover,
@@ -92,53 +100,35 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                   ),
                                 ),
                                 title: Text(
-                                  carrito[index].nombre.length > 20 ? carrito[index].nombre.substring(0, 15) + '...' : carrito[index].nombre,
-                                  style: TextStyle(
+                                  carrito[index].nombre.length > 35 ? carrito[index].nombre.substring(0, 35) + '...' : carrito[index].nombre,
+                                  style: const TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 subtitle: Text(
                                   'Precio: ${carrito[index].precio}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontStyle: FontStyle.italic,
                                   ),
                                 ),
-                                trailing: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {
-                                        // Lógica para restar uno a la cantidad
-                                      },
-                                      icon: Icon(Icons.remove),
+                                trailing:
+                                  Container(
+                                    width: 30,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      border: Border.all(color: Colors.black),
+                                      color: Colors.black,
                                     ),
-                                    Container(
-                                      width: 30,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5.0),
-                                        border: Border.all(color: Colors.black),
-                                        color: Colors.black,
-                                      ),
-                                      child: TextFormField(
-                                        initialValue: '1', // Puedes inicializarlo con la cantidad actual
-                                        textAlign: TextAlign.center,
-                                        keyboardType: TextInputType.number,
+                                    child: Center(
+                                      child: Text(
+                                        carrito[index].cantidad.toString(),
                                         style: TextStyle(
-                                          backgroundColor: Colors.black,
                                           color: Colors.white,
-                                          decoration: TextDecoration.none, // Elimina la línea de debajo del texto
                                         ),
                                       ),
                                     ),
-                                    IconButton(
-                                      onPressed: () {
-                                        // Lógica para sumar uno a la cantidad
-                                      },
-                                      icon: Icon(Icons.add),
-                                    ),
-                                  ],
-                                ),
+                                  ),
                               ),
                             );
                           },
@@ -148,7 +138,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 25),
+              SizedBox(height: 55),
               Card(
                 color: Colors.grey[200],
                 elevation: 5.0,
@@ -224,4 +214,5 @@ class _CheckoutPageState extends State<CheckoutPage> {
     }
     return total;
   }
+
 }
