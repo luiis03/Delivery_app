@@ -1,4 +1,5 @@
 import 'package:delivery_app/models/restaurantes.dart';
+import 'package:delivery_app/pages/home/main_page.dart';
 import 'package:delivery_app/pages/home/producto_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -43,16 +44,38 @@ class _RestaurantePageState extends State<RestaurantePage> {
                   floating: false,
                   pinned: true,
                   actions: [
-                    Center(
-                      child: IconBadge(
-                        icon: Icon(Icons.shopping_cart_outlined, color: Colors.black),
-                        itemCount: carritoNotifier.carrito.length,
-                        badgeColor: Colors.black,
-                        itemColor: Colors.white,
-                        hideZero: true,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MainPage(index: 2),
+                          ),
+                        );
+                      },
+                      child: SizedBox(
+                        width: 50, // Ajusta el ancho según tus preferencias
+                        height: 50, // Ajusta la altura según tus preferencias
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.naranja, // Cambia por el color que desees
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: IconBadge(
+                              icon: Icon(Icons.shopping_cart_outlined, color: Colors.black),
+                              itemCount: carritoNotifier.carrito.length,
+                              badgeColor: Colors.black,
+                              itemColor: Colors.white,
+                              hideZero: true,
+                              right: 15.0,
+                              top: 1.0,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                    SizedBox(width: 5)
+                    SizedBox(width: 5),
                   ],
                   flexibleSpace: FlexibleSpaceBar(
                     title: Text(widget.restaurantes.nombre),
@@ -85,7 +108,7 @@ class _RestaurantePageState extends State<RestaurantePage> {
                     ],
                   ),
                   SizedBox(height: 5),
-                  carrouselProductos(widget.restaurantes),
+                  carrouselProductos(widget.restaurantes, carritoNotifier),
                   SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -95,17 +118,12 @@ class _RestaurantePageState extends State<RestaurantePage> {
                     ],
                   ),
                   SizedBox(height: 5),
-                  carrouselProductos(widget.restaurantes),
+                  carrouselProductos(widget.restaurantes, carritoNotifier),
                   SizedBox(height: 10),
+                  // cardCarrito()
                 ],
               ),
             ),
-          ),
-          Positioned(
-            left: 50,
-            right: 50,
-            bottom: 0,
-            child: cardCarrito(),
           ),
         ],
       ),
@@ -183,7 +201,7 @@ class _RestaurantePageState extends State<RestaurantePage> {
     );
   }
 
-  Stack cardProducto(Producto producto) {
+  Stack cardProducto(Producto producto, CarritoNotifier carritoNotifier) {
     return Stack(
       children: [
         InkWell(
@@ -236,7 +254,14 @@ class _RestaurantePageState extends State<RestaurantePage> {
                     ),
                   ),
                   Expanded(
-                      child: IconButton(onPressed: () {}, icon: Icon(Icons.add_shopping_cart_rounded))),
+                      child: IconButton(
+                          onPressed: () {
+                            print("HOLA");
+                            carritoNotifier.agregarAlCarrito(producto);
+                          },
+                          icon: Icon(Icons.add_shopping_cart_rounded)
+                      )
+                  ),
                 ],
               ),
             ),
@@ -246,7 +271,7 @@ class _RestaurantePageState extends State<RestaurantePage> {
     );
   }
 
-  SizedBox carrouselProductos(Restaurantes restaurantes) {
+  SizedBox carrouselProductos(Restaurantes restaurantes, CarritoNotifier carritoNotifier) {
     return SizedBox(
       height: 165,
       child: ListView.builder(
@@ -257,7 +282,7 @@ class _RestaurantePageState extends State<RestaurantePage> {
         itemBuilder: (context, index) {
           return Padding(
               padding: const EdgeInsets.only(right: 5.0),
-              child: cardProducto(restaurantes.productos[index])
+              child: cardProducto(restaurantes.productos[index], carritoNotifier)
           );
         }
       ),

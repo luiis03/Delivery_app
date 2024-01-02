@@ -10,6 +10,7 @@ import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
 import '../../widgets/icon_text_widget.dart';
 import '../carrito/carrito_notifier.dart';
+import 'main_page.dart';
 
 class ProductoPage extends StatefulWidget {
   final Producto producto;
@@ -41,22 +42,47 @@ class _ProductoPageState extends State<ProductoPage> {
               return [
                 SliverAppBar(
                   automaticallyImplyLeading: false,
-                  leading: IconButton(onPressed: () => context.pop(), icon: Icon(Icons.arrow_back, color: Colors.white,)),
+                  leading: IconButton(
+                      onPressed: () => context.pop(),
+                      icon: Icon(Icons.arrow_back, color: Colors.white)
+                  ),
                   backgroundColor: AppColors.naranja,
                   expandedHeight: 360.0,
                   floating: false,
                   pinned: true,
                   actions: [
-                    Center(
-                      child: IconBadge(
-                        icon: Icon(Icons.shopping_cart_outlined, color: Colors.white),
-                        itemCount: carritoNotifier.carrito.length,
-                        badgeColor: Colors.black,
-                        itemColor: Colors.white,
-                        hideZero: true,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MainPage(index: 2),
+                          ),
+                        );
+                      },
+                      child: SizedBox(
+                        width: 50, // Ajusta el ancho según tus preferencias
+                        height: 50, // Ajusta la altura según tus preferencias
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.naranja, // Cambia por el color que desees
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: IconBadge(
+                              icon: Icon(Icons.shopping_cart_outlined, color: Colors.black),
+                              itemCount: carritoNotifier.carrito.length,
+                              badgeColor: Colors.black,
+                              itemColor: Colors.white,
+                              hideZero: true,
+                              right: 15.0,
+                              top: 1.0,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                    SizedBox(width: 5)
+                    SizedBox(width: 5),
                   ],
                   actionsIconTheme: IconThemeData(size: 20, color: Colors.white),
                   flexibleSpace: FlexibleSpaceBar(
@@ -73,7 +99,7 @@ class _ProductoPageState extends State<ProductoPage> {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: cardInfo(widget.producto),
+                  child: cardInfo(widget.producto, carritoNotifier),
                 ),
               ];
             },
@@ -88,7 +114,7 @@ class _ProductoPageState extends State<ProductoPage> {
     );
   }
 
-  Container cardInfo(Producto producto) {
+  Container cardInfo(Producto producto, CarritoNotifier carritoNotifier) {
     return Container(
       height: 440,
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -225,7 +251,7 @@ class _ProductoPageState extends State<ProductoPage> {
               ),
               SizedBox(height: 40),
 
-              cardCarrito(),
+              cardCarrito(carritoNotifier),
             ],
           ),
         ],
@@ -233,7 +259,7 @@ class _ProductoPageState extends State<ProductoPage> {
     );
   }
 
-  Container cardCarrito() {
+  Container cardCarrito(CarritoNotifier carritoNotifier) {
     return Container(
       height: 60,
       width: MediaQuery.of(context).size.width - 125,
@@ -244,6 +270,7 @@ class _ProductoPageState extends State<ProductoPage> {
       child: ElevatedButton(
         onPressed: () {
           addCarrito(cantidadProducto, widget.producto);
+          carritoNotifier.agregarAlCarrito(widget.producto);
         },
         style: ElevatedButton.styleFrom(
           primary: AppColors.naranja,
@@ -278,7 +305,7 @@ class _ProductoPageState extends State<ProductoPage> {
   }
 
   void addCarrito(int cantidadProducto, Producto producto) {
-
+    // producto.cantidad = cantidadProducto;
   }
 
 }

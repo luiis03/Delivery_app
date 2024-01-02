@@ -110,7 +110,7 @@ class _CarritoPageState extends State<CarritoPage> {
                                     IconButton(
                                       onPressed: () {
                                         setState(() {
-                                          restarCantidad(carritoNotifier.carrito[index].cantidad);
+                                          carritoNotifier.quitarDelCarrito(carritoNotifier.carrito[index]);
                                         });
                                       },
                                       icon: Icon(Icons.remove_circle_outline),
@@ -133,7 +133,7 @@ class _CarritoPageState extends State<CarritoPage> {
                                     ),
                                     IconButton(
                                       onPressed: () {
-                                        sumarCantidad(carritoNotifier.carrito[index].cantidad);
+                                        carritoNotifier.agregarAlCarrito(carritoNotifier.carrito[index]);
                                       },
                                       icon: Icon(Icons.add_circle_outline),
                                     ),

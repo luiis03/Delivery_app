@@ -14,7 +14,9 @@ import '../carrito/carrito_page.dart';
 import 'home_page.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+  final int index;
+
+  const MainPage({Key? key, this.index = 1}) : super(key: key);
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -29,7 +31,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    _currentIndex = 1;
+    _currentIndex = widget.index;
   }
 
   @override
@@ -131,8 +133,10 @@ class _MainPageState extends State<MainPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.directions_walk,
-              color: switchValue ? Colors.grey : AppColors.naranja),
+          Icon(
+              Icons.directions_walk,
+              color: switchValue ? Colors.grey : AppColors.naranja
+          ),
           CupertinoSwitch(
             activeColor: AppColors.naranja,
             value: switchValue,
@@ -142,8 +146,10 @@ class _MainPageState extends State<MainPage> {
               });
             },
           ),
-          Icon(Icons.delivery_dining,
-              color: switchValue ? AppColors.naranja : Colors.grey),
+          Icon(
+              Icons.delivery_dining,
+              color: switchValue ? AppColors.naranja : Colors.grey
+          ),
         ],
       ),
     );
