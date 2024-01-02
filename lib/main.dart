@@ -1,20 +1,26 @@
-import 'package:delivery_app/config/router.dart';
+
 import 'package:delivery_app/firebase_options.dart';
-import 'package:delivery_app/pages/forget_pw_screen.dart';
-import 'package:delivery_app/pages/landing_screen.dart';
-import 'package:delivery_app/pages/login_screen.dart';
-import 'package:delivery_app/pages/signup_screen.dart';
+import 'package:delivery_app/pages/carrito/carrito_notifier.dart';
+
 import 'package:delivery_app/pages/splash_screen.dart';
 import 'package:delivery_app/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => CarritoNotifier()),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -23,6 +29,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final carritoNotifier = Provider.of<CarritoNotifier>(context, listen: false);
     return MaterialApp(
       title: 'Delivery app',
       debugShowCheckedModeBanner: false,

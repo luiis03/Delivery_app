@@ -3,11 +3,13 @@ import 'package:delivery_app/utils/helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:icon_badge/icon_badge.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/producto.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
 import '../../widgets/icon_text_widget.dart';
+import '../carrito/carrito_notifier.dart';
 
 class ProductoPage extends StatefulWidget {
   final Producto producto;
@@ -29,6 +31,8 @@ class _ProductoPageState extends State<ProductoPage> {
 
   @override
   Widget build(BuildContext context) {
+    final CarritoNotifier carritoNotifier = Provider.of<CarritoNotifier>(context, listen: false);
+
     return Scaffold(
       body: Stack(
         children: [
@@ -46,7 +50,7 @@ class _ProductoPageState extends State<ProductoPage> {
                     Center(
                       child: IconBadge(
                         icon: Icon(Icons.shopping_cart_outlined, color: Colors.white),
-                        itemCount: 2,
+                        itemCount: carritoNotifier.carrito.length,
                         badgeColor: Colors.black,
                         itemColor: Colors.white,
                         hideZero: true,

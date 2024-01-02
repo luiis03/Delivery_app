@@ -1,18 +1,15 @@
 import 'dart:convert';
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:delivery_app/api/repository/impl/restaurantes_repository_impl.dart';
-import 'package:delivery_app/pages/home/slider_catalogo_page.dart';
 import 'package:delivery_app/pages/perfil/perfil_page.dart';
 import 'package:delivery_app/utils/colors.dart';
-import 'package:delivery_app/widgets/big_text.dart';
-import 'package:delivery_app/widgets/sub_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:icon_badge/icon_badge.dart';
+import 'package:provider/provider.dart';
 
+import '../carrito/carrito_notifier.dart';
 import '../carrito/carrito_page.dart';
 import 'home_page.dart';
 
@@ -37,6 +34,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    final CarritoNotifier carritoNotifier = Provider.of<CarritoNotifier>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -88,7 +86,7 @@ class _MainPageState extends State<MainPage> {
           ],
         )
       ),
-      bottomNavigationBar: wBottomNavigationBar(),
+      bottomNavigationBar: wBottomNavigationBar(carritoNotifier),
       body: IndexedStack(
         index: _currentIndex,
         children: [
@@ -100,19 +98,19 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  CurvedNavigationBar wBottomNavigationBar() {
+  CurvedNavigationBar wBottomNavigationBar(CarritoNotifier carritoNotifier) {
     return CurvedNavigationBar(
       height: 55,
       color: AppColors.buttonBackgroundColor,
       backgroundColor: AppColors.naranja,
       animationCurve: Curves.easeInCubic,
       animationDuration: const Duration(milliseconds: 400),
-      items: const <Widget>[
+      items: <Widget>[
         Icon(Icons.person, size: 30, color: AppColors.naranja),
         Icon(Icons.home, size: 30, color: AppColors.naranja),
         IconBadge(
           icon: Icon(Icons.shopping_cart, color: AppColors.naranja),
-          itemCount: 2,
+          itemCount: carritoNotifier.carrito.length,
           badgeColor: Colors.black,
           itemColor: Colors.white,
           hideZero: true,

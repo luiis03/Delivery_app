@@ -1,16 +1,14 @@
 import 'package:delivery_app/models/restaurantes.dart';
 import 'package:delivery_app/pages/home/producto_page.dart';
-import 'package:delivery_app/utils/helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:icon_badge/icon_badge.dart';
+import 'package:provider/provider.dart';
 
-import '../../api/repository/impl/restaurantes_repository_impl.dart';
 import '../../models/producto.dart';
 import '../../utils/colors.dart';
-import '../../utils/dimensions.dart';
 import '../../widgets/icon_text_widget.dart';
-import 'main_page.dart';
+import '../carrito/carrito_notifier.dart';
 
 class RestaurantePage extends StatefulWidget {
   final Restaurantes restaurantes;
@@ -31,6 +29,8 @@ class _RestaurantePageState extends State<RestaurantePage> {
 
   @override
   Widget build(BuildContext context) {
+    final CarritoNotifier carritoNotifier = Provider.of<CarritoNotifier>(context, listen: false);
+
     return Scaffold(
       body: Stack(
         children: [
@@ -46,7 +46,7 @@ class _RestaurantePageState extends State<RestaurantePage> {
                     Center(
                       child: IconBadge(
                         icon: Icon(Icons.shopping_cart_outlined, color: Colors.black),
-                        itemCount: 2,
+                        itemCount: carritoNotifier.carrito.length,
                         badgeColor: Colors.black,
                         itemColor: Colors.white,
                         hideZero: true,
@@ -235,7 +235,8 @@ class _RestaurantePageState extends State<RestaurantePage> {
                       ],
                     ),
                   ),
-                  Expanded(child: IconButton(onPressed: () {}, icon: Icon(Icons.add_shopping_cart_rounded))),
+                  Expanded(
+                      child: IconButton(onPressed: () {}, icon: Icon(Icons.add_shopping_cart_rounded))),
                 ],
               ),
             ),

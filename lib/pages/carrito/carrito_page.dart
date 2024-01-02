@@ -1,10 +1,12 @@
 import 'package:delivery_app/utils/helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/producto.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
+import 'carrito_notifier.dart';
 import 'checkout_page.dart';
 
 class CarritoPage extends StatefulWidget {
@@ -15,17 +17,11 @@ class CarritoPage extends StatefulWidget {
 }
 
 class _CarritoPageState extends State<CarritoPage> {
-  List<Producto> carrito = [
-    Producto(nombre: 'Productoasdaasdasdasdsasdsd 1', cantidad: 2, precio: 10.0, id: 1, imagen: "assets/img/hamburguesa_victoria.jpeg"),
-    Producto(nombre: 'Producto 2', cantidad: 1, precio: 15.0, id: 1, imagen: "assets/img/hamburguesa_victoria.jpeg"),
-    Producto(nombre: 'Producto 2', cantidad: 1, precio: 15.0, id: 1, imagen: "assets/img/hamburguesa_victoria.jpeg"),
-    Producto(nombre: 'Producto 2', cantidad: 1, precio: 15.0, id: 1, imagen: "assets/img/hamburguesa_victoria.jpeg"),
-    Producto(nombre: 'Producto 2', cantidad: 1, precio: 15.0, id: 1, imagen: "assets/img/hamburguesa_victoria.jpeg"),
-    Producto(nombre: 'Producto 2', cantidad: 1, precio: 15.0, id: 1, imagen: "assets/img/hamburguesa_victoria.jpeg"),
-  ];
+
 
   @override
   Widget build(BuildContext context) {
+    final carritoNotifier = Provider.of<CarritoNotifier>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -68,7 +64,7 @@ class _CarritoPageState extends State<CarritoPage> {
                         height: 430.0,
                         child: ListView.builder(
                           shrinkWrap: true,
-                          itemCount: carrito.length,
+                          itemCount: carritoNotifier.carrito.length,
                           itemBuilder: (context, index) {
                             return Container(
                               height: 80,
@@ -90,20 +86,20 @@ class _CarritoPageState extends State<CarritoPage> {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(Dimensions.radius20),
                                     child: Image.asset(
-                                      carrito[index].imagen,
+                                      carritoNotifier.carrito[index].imagen,
                                       fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),
                                 title: Text(
-                                  carrito[index].nombre.length > 20 ? carrito[index].nombre.substring(0, 15) + '...' : carrito[index].nombre,
+                                  carritoNotifier.carrito[index].nombre.length > 20 ? carritoNotifier.carrito[index].nombre.substring(0, 15) + '...' : carritoNotifier.carrito[index].nombre,
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 subtitle: Text(
-                                  'Precio: ${carrito[index].precio}',
+                                  'Precio: ${carritoNotifier.carrito[index].precio}',
                                   style: TextStyle(
                                     fontStyle: FontStyle.italic,
                                   ),
@@ -114,7 +110,7 @@ class _CarritoPageState extends State<CarritoPage> {
                                     IconButton(
                                       onPressed: () {
                                         setState(() {
-                                          restarCantidad(carrito[index].cantidad);
+                                          restarCantidad(carritoNotifier.carrito[index].cantidad);
                                         });
                                       },
                                       icon: Icon(Icons.remove_circle_outline),
@@ -128,7 +124,7 @@ class _CarritoPageState extends State<CarritoPage> {
                                       ),
                                       child: Center(
                                         child: Text(
-                                          carrito[index].cantidad.toString(),
+                                          carritoNotifier.carrito[index].cantidad.toString(),
                                           style: TextStyle(
                                             color: Colors.white,
                                           ),
@@ -137,7 +133,7 @@ class _CarritoPageState extends State<CarritoPage> {
                                     ),
                                     IconButton(
                                       onPressed: () {
-                                        sumarCantidad(carrito[index].cantidad);
+                                        sumarCantidad(carritoNotifier.carrito[index].cantidad);
                                       },
                                       icon: Icon(Icons.add_circle_outline),
                                     ),
@@ -223,10 +219,10 @@ class _CarritoPageState extends State<CarritoPage> {
   void eliminarDelCarrito() {}
 
   double calcularTotalCarrito() {
-    double total = 0.0;
-    for (Producto producto in carrito) {
-      total += (producto.cantidad * producto.precio);
-    }
+    double total = 9.0;
+    // for (Producto producto in carrito) {
+    //   total += (producto.cantidad * producto.precio);
+    // }
     return total;
   }
 
