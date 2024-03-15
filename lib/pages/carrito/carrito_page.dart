@@ -75,24 +75,27 @@ class _CarritoPageState extends State<CarritoPage> {
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               child: ListTile(
-                                contentPadding: EdgeInsets.all(3), // Ajusta el espacio interno del ListTile
+                                contentPadding: EdgeInsets.fromLTRB(10,5,5,5),
+                                  /*
+                                  contentPadding: EdgeInsets.fromLTRB(12, 8, 12, 5), // Ajusta el espacio interno del ListTile
+                                
                                 leading: Container(
                                   width: 70, // Ajusta el ancho del leading según tus preferencias
                                   height: 80, // Ajusta la altura del leading según tus preferencias
                                   decoration: BoxDecoration(
                                     color: AppColors.naranja,
-                                    borderRadius: BorderRadius.circular(Dimensions.radius20), // Añade un borde
+                                    borderRadius: BorderRadius.circular(20), // Añade un borde
                                   ),
                                   child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(Dimensions.radius20),
+                                    borderRadius: BorderRadius.circular(10),
                                     child: Image.asset(
                                       carritoNotifier.carrito[index].imagen,
                                       fit: BoxFit.cover,
                                     ),
                                   ),
-                                ),
+                                ),*/
                                 title: Text(
-                                  carritoNotifier.carrito[index].nombre.length > 20 ? carritoNotifier.carrito[index].nombre.substring(0, 15) + '...' : carritoNotifier.carrito[index].nombre,
+                                  carritoNotifier.carrito[index].nombre.length > 25 ? carritoNotifier.carrito[index].nombre.substring(0, 25) + '...' : carritoNotifier.carrito[index].nombre,
                                   style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
@@ -104,40 +107,38 @@ class _CarritoPageState extends State<CarritoPage> {
                                     fontStyle: FontStyle.italic,
                                   ),
                                 ),
-                                trailing: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          carritoNotifier.quitarDelCarrito(carritoNotifier.carrito[index]);
-                                        });
-                                      },
-                                      icon: Icon(Icons.remove_circle_outline),
-                                    ),
-                                    Container(
-                                      width: 30,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5.0),
-                                        border: Border.all(color: Colors.black),
-                                        color: Colors.black,
-                                      ),
-                                      child: Center(
+                                trailing: SizedBox(
+                                  width: 130, // Ancho fijo para el trailing
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            carritoNotifier.quitarDelCarrito(carritoNotifier.carrito[index]);
+                                          });
+                                        },
+                                        icon: Icon(Icons.remove_circle_outline),
+                                      ), // Ajusta el espacio entre los botones y el CircleAvatar
+                                      CircleAvatar(
+                                        radius: 15,
+                                        backgroundColor: Colors.black,
                                         child: Text(
                                           carritoNotifier.carrito[index].cantidad.toString(),
                                           style: TextStyle(
                                             color: Colors.white,
                                           ),
                                         ),
+                                      ), // Ajusta el espacio entre el CircleAvatar y el botón de añadir
+                                      IconButton(
+                                        onPressed: () {
+                                          carritoNotifier.agregarAlCarrito(carritoNotifier.carrito[index]);
+                                        },
+                                        icon: Icon(Icons.add_circle_outline),
                                       ),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        carritoNotifier.agregarAlCarrito(carritoNotifier.carrito[index]);
-                                      },
-                                      icon: Icon(Icons.add_circle_outline),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
@@ -203,12 +204,10 @@ class _CarritoPageState extends State<CarritoPage> {
                           ],
                         ),
                       )
-
                     ],
                   ),
                 ),
               )
-
             ],
           ),
         ),

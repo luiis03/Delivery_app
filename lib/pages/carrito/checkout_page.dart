@@ -100,7 +100,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                   ),
                                 ),
                                 title: Text(
-                                  carrito[index].nombre.length > 35 ? carrito[index].nombre.substring(0, 35) + '...' : carrito[index].nombre,
+                                  carrito[index].nombre.length > 25 ? carrito[index].nombre.substring(0, 25) + '...' : carrito[index].nombre,
                                   style: const TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
@@ -112,23 +112,17 @@ class _CheckoutPageState extends State<CheckoutPage> {
                                     fontStyle: FontStyle.italic,
                                   ),
                                 ),
-                                trailing:
-                                  Container(
-                                    width: 30,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5.0),
-                                      border: Border.all(color: Colors.black),
-                                      color: Colors.black,
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        carrito[index].cantidad.toString(),
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                        ),
-                                      ),
+                                trailing: CircleAvatar(
+                                  radius: 15,
+                                  backgroundColor: Colors.black,
+                                  child: Text(
+                                    carrito[index].cantidad.toString(),
+                                    style: TextStyle(
+                                      color: Colors.white,
                                     ),
                                   ),
+                                ),
+
                               ),
                             );
                           },
@@ -138,7 +132,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 55),
+              SizedBox(height: 15),
               Card(
                 color: Colors.grey[200],
                 elevation: 5.0,
