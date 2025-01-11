@@ -1,7 +1,5 @@
 import 'package:delivery_app/models/producto.dart';
 
-import 'menus.dart';
-
 class Restaurantes {
   final int id;
   final String nombre;

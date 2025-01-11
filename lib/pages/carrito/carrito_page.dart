@@ -18,10 +18,9 @@ class CarritoPage extends StatefulWidget {
 
 class _CarritoPageState extends State<CarritoPage> {
 
-
   @override
   Widget build(BuildContext context) {
-    final carritoNotifier = Provider.of<CarritoNotifier>(context);
+    final CarritoNotifier carritoNotifier = Provider.of<CarritoNotifier>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
@@ -60,91 +59,7 @@ class _CarritoPageState extends State<CarritoPage> {
                         color: Colors.grey,
                       ),
                       // Lista de productos
-                      Container(
-                        height: 430.0,
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: carritoNotifier.carrito.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              height: 80,
-                              margin: EdgeInsets.symmetric(vertical: 5.0),
-                              padding: EdgeInsets.all(2.0),
-                              decoration: BoxDecoration(
-                                color: AppColors.naranja,
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              child: ListTile(
-                                contentPadding: EdgeInsets.fromLTRB(10,5,5,5),
-                                  /*
-                                  contentPadding: EdgeInsets.fromLTRB(12, 8, 12, 5), // Ajusta el espacio interno del ListTile
-                                
-                                leading: Container(
-                                  width: 70, // Ajusta el ancho del leading según tus preferencias
-                                  height: 80, // Ajusta la altura del leading según tus preferencias
-                                  decoration: BoxDecoration(
-                                    color: AppColors.naranja,
-                                    borderRadius: BorderRadius.circular(20), // Añade un borde
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image.asset(
-                                      carritoNotifier.carrito[index].imagen,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),*/
-                                title: Text(
-                                  carritoNotifier.carrito[index].nombre.length > 25 ? carritoNotifier.carrito[index].nombre.substring(0, 25) + '...' : carritoNotifier.carrito[index].nombre,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  'Precio: ${carritoNotifier.carrito[index].precio}',
-                                  style: TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                  ),
-                                ),
-                                trailing: SizedBox(
-                                  width: 130, // Ancho fijo para el trailing
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      IconButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            carritoNotifier.quitarDelCarrito(carritoNotifier.carrito[index]);
-                                          });
-                                        },
-                                        icon: Icon(Icons.remove_circle_outline),
-                                      ), // Ajusta el espacio entre los botones y el CircleAvatar
-                                      CircleAvatar(
-                                        radius: 15,
-                                        backgroundColor: Colors.black,
-                                        child: Text(
-                                          carritoNotifier.carrito[index].cantidad.toString(),
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ), // Ajusta el espacio entre el CircleAvatar y el botón de añadir
-                                      IconButton(
-                                        onPressed: () {
-                                          carritoNotifier.agregarAlCarrito(carritoNotifier.carrito[index]);
-                                        },
-                                        icon: Icon(Icons.add_circle_outline),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
+                      listProductos(carritoNotifier)
                     ],
                   ),
                 ),
@@ -211,6 +126,76 @@ class _CarritoPageState extends State<CarritoPage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Container listProductos(CarritoNotifier carritoNotifier) {
+    return Container(
+      height: 430.0,
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: carritoNotifier.carrito.length,
+        itemBuilder: (context, index) {
+          return Container(
+            height: 80,
+            margin: EdgeInsets.symmetric(vertical: 5.0),
+            padding: EdgeInsets.all(2.0),
+            decoration: BoxDecoration(
+              color: AppColors.naranja,
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: ListTile(
+              contentPadding: EdgeInsets.fromLTRB(10,5,5,5),
+              title: Text(
+                carritoNotifier.carrito[index].nombre.length > 25 ? carritoNotifier.carrito[index].nombre.substring(0, 25) + '...' : carritoNotifier.carrito[index].nombre,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: Text(
+                'Precio: ${carritoNotifier.carrito[index].precio}',
+                style: TextStyle(
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+              trailing: SizedBox(
+                width: 130, // Ancho fijo para el trailing
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        setState(() {
+                          carritoNotifier.quitarDelCarrito(carritoNotifier.carrito[index]);
+                        });
+                      },
+                      icon: Icon(Icons.remove_circle_outline),
+                    ), // Ajusta el espacio entre los botones y el CircleAvatar
+                    CircleAvatar(
+                      radius: 15,
+                      backgroundColor: Colors.black,
+                      child: Text(
+                        carritoNotifier.carrito[index].cantidad.toString(),
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ), // Ajusta el espacio entre el CircleAvatar y el botón de añadir
+                    IconButton(
+                      onPressed: () {
+                        carritoNotifier.agregarAlCarrito(carritoNotifier.carrito[index]);
+                      },
+                      icon: Icon(Icons.add_circle_outline),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

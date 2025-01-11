@@ -42,13 +42,11 @@ class RestaurantesRepositoryImpl implements RestaurantesRepository {
         print(fetchedRestaurantes.length);
         return fetchedRestaurantes;
       } else {
-        // Manejar el error de manera más explícita y devolver una lista vacía
         print('Error en la solicitud HTTP: ${response.statusCode}');
         print('Cuerpo de la respuesta: ${response.body}');
         return [];
       }
     } catch (error) {
-      // Manejar errores de manera general y devolver una lista vacía
       print(error);
       print('Error en la solicitud HTTP: $error');
       return [];

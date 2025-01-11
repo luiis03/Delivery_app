@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:delivery_app/pages/home/restaurante_page.dart';
 import 'package:delivery_app/utils/dimensions.dart';
+import 'package:delivery_app/utils/helper.dart';
 import 'package:delivery_app/widgets/big_text.dart';
 import 'package:delivery_app/widgets/icon_text_widget.dart';
 import 'package:dots_indicator/dots_indicator.dart';
@@ -82,16 +84,19 @@ class _SliderCatalogoPageState extends State<SliderCatalogoPage> {
 
     return Stack(
       children: [
-        // Logo restaurante
-        Container(
-          height: containerHeight1,
-          margin: EdgeInsets.symmetric(horizontal: 10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            color: Colors.white,
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage(restaurante.img_default),
+        // Imagen restaurante
+        GestureDetector(
+          onTap: () => context.push(RestaurantePage(restaurantes: restaurante)),
+          child: Container(
+            height: containerHeight1,
+            margin: EdgeInsets.symmetric(horizontal: 10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: Colors.white,
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: AssetImage(restaurante.img_default),
+              ),
             ),
           ),
         ),

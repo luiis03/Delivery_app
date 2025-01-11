@@ -44,13 +44,13 @@ class _HomePageState extends State<HomePage> {
         color: AppColors.buttonBackgroundColor,
         child: Column(
           children: [
-            SizedBox(height: 5),
-            Row(
-              children: [
-                SearchBarInput(),
-              ],
-            ),
-            SizedBox(height: 10),
+            SizedBox(height: 15),
+            // Row(
+            //   children: [
+            //     SearchBarInput(),
+            //   ],
+            // ),
+            // SizedBox(height: 10),
             SliderCatalogoPage(),
             listaRestaurantes(),
           ],

@@ -21,6 +21,8 @@ class RestaurantePage extends StatefulWidget {
 
 class _RestaurantePageState extends State<RestaurantePage> {
   late Restaurantes restaurante;
+  late AnimationController _animationController;
+  late Animation<Color?> _colorAnimation;
 
   @override
   void initState() {
@@ -44,38 +46,49 @@ class _RestaurantePageState extends State<RestaurantePage> {
                   floating: false,
                   pinned: true,
                   actions: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MainPage(index: 2),
+                    Consumer<CarritoNotifier>(
+                      builder: (context, carritoNotifier, child) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MainPage(index: 2),
+                              ),
+                            );
+                          },
+                          child: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: Stack(
+                              children: [
+                                Center(
+                                  child: Icon(Icons.shopping_cart_outlined, color: Colors.black),
+                                ),
+                                if (carritoNotifier.carrito.isNotEmpty)
+                                  Positioned(
+                                    right: 6,
+                                    top: 6,
+                                    child: AnimatedScale(
+                                      scale: carritoNotifier.carrito.isNotEmpty ? 1.2 : 1.0,
+                                      duration: const Duration(milliseconds: 300),
+                                      child: CircleAvatar(
+                                        radius: 10,
+                                        backgroundColor: Colors.white,
+                                        child: Text(
+                                          carritoNotifier.carrito.length.toString(),
+                                          style: TextStyle(fontSize: 12, color: AppColors.naranja),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
                           ),
                         );
                       },
-                      child: SizedBox(
-                        width: 50, // Ajusta el ancho según tus preferencias
-                        height: 50, // Ajusta la altura según tus preferencias
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: AppColors.naranja, // Cambia por el color que desees
-                            shape: BoxShape.circle,
-                          ),
-                          child: Center(
-                            child: IconBadge(
-                              icon: Icon(Icons.shopping_cart_outlined, color: Colors.black),
-                              itemCount: carritoNotifier.carrito.length,
-                              badgeColor: Colors.black,
-                              itemColor: Colors.white,
-                              hideZero: true,
-                              right: 15.0,
-                              top: 1.0,
-                            ),
-                          ),
-                        ),
-                      ),
                     ),
-                    SizedBox(width: 5),
+                    const SizedBox(width: 5),
                   ],
                   flexibleSpace: FlexibleSpaceBar(
                     title: Text(widget.restaurantes.nombre),
@@ -204,6 +217,7 @@ class _RestaurantePageState extends State<RestaurantePage> {
   Stack cardProducto(Producto producto, CarritoNotifier carritoNotifier) {
     return Stack(
       children: [
+        // Imagen del producto
         InkWell(
           onTap: () {
             // Navegar a la página ProductoPage y enviar la información del producto
@@ -216,12 +230,19 @@ class _RestaurantePageState extends State<RestaurantePage> {
           },
           child: Container(
             width: MediaQuery.of(context).size.width / 2.5,
-            height: 150,
+            height: 100,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  blurRadius: 6,
+                  offset: Offset(0, 4),
+                ),
+              ],
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(15),
               child: Image.asset(
                 producto.imagen,
                 fit: BoxFit.cover,
@@ -229,17 +250,28 @@ class _RestaurantePageState extends State<RestaurantePage> {
             ),
           ),
         ),
+        // Información del producto
         Positioned(
-          top: 90,
+          bottom: 0,
           child: Container(
             width: MediaQuery.of(context).size.width / 2.5,
-            height: 65,
+            height: 60,
             decoration: BoxDecoration(
-              color: AppColors.naranja,
-              borderRadius: BorderRadius.circular(10),
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(15),
+                bottomRight: Radius.circular(15),
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  blurRadius: 4,
+                  offset: Offset(0, -2),
+                ),
+              ],
             ),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
               child: Row(
                 children: [
                   Expanded(
@@ -248,19 +280,36 @@ class _RestaurantePageState extends State<RestaurantePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(producto.nombre, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
-                        Text('\$${producto.precio}', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold))
+                        Text(
+                          producto.nombre,
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Text(
+                          '\$${producto.precio.toStringAsFixed(2)}',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.grey[700],
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                  Expanded(
-                      child: IconButton(
-                          onPressed: () {
-                            print("HOLA");
-                            carritoNotifier.agregarAlCarrito(producto);
-                          },
-                          icon: Icon(Icons.add_shopping_cart_rounded)
-                      )
+                  // Botón de añadir al carrito
+                  IconButton(
+                    onPressed: () {
+                      carritoNotifier.agregarAlCarrito(producto);
+                    },
+                    icon: Icon(
+                      Icons.add_shopping_cart_rounded,
+                      color: Colors.orange,
+                      size: 25,
+                    ),
                   ),
                 ],
               ),
@@ -270,6 +319,7 @@ class _RestaurantePageState extends State<RestaurantePage> {
       ],
     );
   }
+
 
   SizedBox carrouselProductos(Restaurantes restaurantes, CarritoNotifier carritoNotifier) {
     return SizedBox(
