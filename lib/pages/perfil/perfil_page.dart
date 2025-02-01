@@ -1,12 +1,23 @@
-import 'package:delivery_app/utils/dimensions.dart';
+import 'package:delivery_app/api/controller/user_controller.dart';
+import 'package:delivery_app/pages/perfil/pedido_page.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:delivery_app/utils/helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../api/repository/impl/pedidos_repository_impl.dart';
 import '../../api/repository/impl/perfil_repository_impl.dart';
+import '../../api/repository/impl/usuario_repository_impl.dart';
+import '../../models/pedido.dart';
 import '../../models/usuario.dart';
 import '../../utils/colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import '../../utils/user_notifier.dart';
+
 
 class PerfilPage extends StatefulWidget {
   @override
@@ -16,6 +27,8 @@ class PerfilPage extends StatefulWidget {
 enum Tema {claro, oscuro}
 
 class _PerfilPageState extends State<PerfilPage> {
+  late Future<Usuario> usuario;
+
   static const routeName = "/perfilPage";
   final FirebaseAuth _auth = FirebaseAuth.instance;
   TextEditingController controllerNombre = TextEditingController();
@@ -62,166 +75,164 @@ class _PerfilPageState extends State<PerfilPage> {
   void initState() {
     super.initState();
     cargar_datos();
+    usuario = UsuarioRepositoryImpl().getUsuarioById(1);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Card(
-                elevation: 5.0,
-                color: Colors.grey[200],
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+    // Obtén el UserNotifier
+    final userNotifier = Provider.of<UserNotifier>(context, listen: false);
+
+    return FutureBuilder<Usuario>(
+      future: userNotifier.fetchUser(1),  // Aquí llamamos al método para obtener el usuario
+      builder: (context, snapshot) {
+        // Si el futuro está en progreso
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator()); // Indicador de carga
+        }
+
+        // Si ocurrió un error al cargar el usuario
+        if (snapshot.hasError) {
+          return Center(child: Text('Error al cargar el usuario'));
+        }
+
+        // Si el futuro se completó con éxito
+        if (snapshot.hasData) {
+          final usuario = snapshot.data!;
+          return Scaffold(
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Card(
+                      elevation: 5.0,
+                      color: Colors.grey[200],
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
                               children: [
-                                Text(
-                                  'Información del usuario',
-                                  style: TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold,
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Información del usuario',
+                                        style: TextStyle(
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
                                   ),
+                                ),
+                                Column(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        abrirEditar(userNotifier);
+                                      },
+                                      icon: Icon(Icons.edit),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                          ),
-                          Column(
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  abrirEditar();
-                                },
-                                icon: Icon(Icons.edit),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-
-                      Divider(height: 15, color: Colors.grey,),
-                      buildInfoField('Nombre', 'John'),
-                      buildInfoField('Apellidos', 'Dow'),
-                      buildInfoField('Email', 'john@gmail.com'),
-                      buildInfoField('Dirección', 'Calle Principal, 123'),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 15.0),
-              Card(
-                color: Colors.grey[200],
-                elevation: 5.0,
-                child: Container(
-                  height: 250.0, // Ajusta la altura del Card según tus preferencias
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Column(
-                            children: [
-                              Text(
-                                'Mis Pedidos',
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10,),
-                      // Lista de pedidos
-                      Container(
-                        height: 180.0, // Ajusta la altura de la lista según tus preferencias
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: misPedidos.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              margin: EdgeInsets.symmetric(vertical: 5.0),
-                              padding: EdgeInsets.all(2.0),
-                              decoration: BoxDecoration(
-                                color: AppColors.naranja,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: ListTile(
-                                title: Text(
-                                  misPedidos[index],
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  'Fecha: ${_obtenerFechaPedido(index)}',
-                                  style: TextStyle(
-                                    fontStyle: FontStyle.italic, // Añade más estilos según tus preferencias
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
+                            Divider(height: 15, color: Colors.grey),
+                            buildInfoField('Nombre', usuario.nombre),
+                            buildInfoField('Apellidos', usuario.apellidos),
+                            buildInfoField('Email', usuario.email),
+                            buildInfoField('Dirección', usuario.direccion),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: 12),
+                    // Aquí pasamos el ID del usuario obtenido desde el snapshot
+                    listMisPedidos(userNotifier),
+                    SizedBox(height: 12),
+                    Card(
+                      color: Colors.grey[200],
+                      elevation: 5.0,
+                      child: Container(
+                        height: 160.0,
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Column(
+                                  children: [
+                                    Text(
+                                      'Configuración',
+                                      style: TextStyle(
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Divider(height: 20, color: Colors.grey),
+                            Container(
+                              height: 30.0,
+                              child: buildNotificacionOption("Recibir notificaciones", _valNotificaciones, onChangeFunctionNotifications),
+                            ),
+                            SizedBox(height: 15),
+                            buildTemaOption(context, "Ajustes de tema", _temaSeleccionado),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(height: 15.0),
-              Card(
-                color: Colors.grey[200],
-                elevation: 5.0,
-                child: Container(
-                  height: 160.0, // Ajusta la altura del Card según tus preferencias
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Column(
-                            children: [
-                              Text(
-                                'Configuración',
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+            ),
+          );
+        }
+
+        // En caso de que no haya datos
+        return Center(child: Text('No se encontró al usuario'));
+      },
+    );
+  }
+
+
+  Card listMisPedidos(UserNotifier userNotifier) {
+    return Card(
+      color: Colors.grey[200],
+      elevation: 5.0,
+      child: Container(
+        height: 200,
+        padding: const EdgeInsets.all(15.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Column(
+                  children: [
+                    Text(
+                      'Mis Pedidos',
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
                       ),
-                      Divider(height: 20, color: Colors.grey),
-                      // Lista de pedidos
-                      Container(
-                        height: 30.0, // Ajusta la altura de la lista según tus preferencias
-                        child: buildNotificacionOption("Recibir notificaciones", _valNotificaciones, onChangeFunctionNotifications),
-                      ),
-                      SizedBox(height: 15),
-                      buildTemaOption(context, "Ajustes de tema",_temaSeleccionado),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              )
-
-
-            ],
-          ),
+              ],
+            ),
+            SizedBox(height: 10),
+            // Lista de pedidos
+            listaPedidos(userNotifier),
+          ],
         ),
       ),
     );
@@ -275,7 +286,7 @@ class _PerfilPageState extends State<PerfilPage> {
     controllerDireccion.text = '';
   }
 
-  void abrirEditar() {
+  void abrirEditar(UserNotifier userNotifier) {
     showDialog(
       context: context,
       builder: (context) {
@@ -283,7 +294,7 @@ class _PerfilPageState extends State<PerfilPage> {
           backgroundColor: Colors.grey[300],
           title: const Text('Editar usuario'),
           children: <Widget>[
-            form()
+            form(userNotifier)
           ],
         );
       },
@@ -350,21 +361,20 @@ class _PerfilPageState extends State<PerfilPage> {
     );
   }
 
-  validate() async {
+  validate(UserNotifier userNotifier) async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
       if (isEditing) {
-        Usuario u = Usuario(nombre: nombre, apellidos: apellidos , email: email, direccion: direccion);
+        Usuario u = Usuario(nombre: nombre, apellidos: apellidos, email: email, direccion: direccion, id: userNotifier.usuario!.id);
         // dbHelper.updateUser(u);
         setState(() {
           isEditing = false;
         });
       } else {
-        // Future<bool> codigoValido = DBHelper().existeCodigoEmt(codigo);
         bool codigoValido = true;
         if (codigoValido) {
           // int idInsert = await dbHelper.getLastIdEmt() ?? 1;
-          Usuario u = Usuario(nombre: nombre, apellidos: apellidos, email: email, direccion: direccion);
+          Usuario u = Usuario(nombre: nombre, apellidos: apellidos, email: email, direccion: direccion, id: userNotifier.usuario!.id);
           // dbHelper.saveUsuario(u);
           Navigator.pop(context);
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Usuario editado correctamente')));
@@ -379,7 +389,7 @@ class _PerfilPageState extends State<PerfilPage> {
     }
   }
 
-  Form form() {
+  Form form(UserNotifier userNotifier) {
     return Form(
       key: formKey,
       child: Padding(
@@ -481,7 +491,7 @@ class _PerfilPageState extends State<PerfilPage> {
                       },
                     ),
                   ),
-                  onPressed: validate,
+                  onPressed: validate(userNotifier),
                   child: const Text('EDITAR'),
                 ),
               ],
@@ -490,6 +500,90 @@ class _PerfilPageState extends State<PerfilPage> {
         ),
       ),
     );
+  }
+
+  Expanded listaPedidos(UserNotifier userNotifier) {
+    return Expanded(
+      child: FutureBuilder<List<Pedido>>(
+        future: PedidosRepositoryImpl().getPedidosByIdUsuario(userNotifier.usuario!.id),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return const Center(child: Text('Error al cargar los datos'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(child: Text('No hay pedidos disponibles'));
+          } else {
+            return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                Pedido pedido = snapshot.data![index];
+                return Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.naranja,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: ListTile(
+                      title: Text(
+                        'Pedido #${pedido.id}}',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${formatDate(pedido.fecha)}',
+                            style: TextStyle(fontSize: 12),
+                          ),
+                          Text(
+                            '${formatEstadoEnvio(pedido.estadoEnvio)}',
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        ],
+                      ),
+                      trailing: Text(
+                        '${pedido.precioTotal.toStringAsFixed(2)}€',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      onTap: () => context.push(PedidoPage(pedido: pedido)),
+                    ),
+                  ),
+                );
+              },
+            );
+          }
+        },
+      ),
+    );
+  }
+
+  String formatDate(String dateString) {
+    final DateTime date = DateTime.parse(dateString);
+    final DateFormat formatter = DateFormat('d MMM y, h:mm'); // Formato legible: 10 Jan 2025, 1:45 PM
+    return formatter.format(date);
+  }
+
+  String formatEstadoEnvio(EstadoEnvio estadoEnvio) {
+    switch (estadoEnvio) {
+      case EstadoEnvio.EN_PREPARACION:
+        return "EN PREPARACION";
+      case EstadoEnvio.CONFIRMADO || EstadoEnvio.CONFIRMADO_RESTAURANTE:
+        return "CONFIRMADO";
+      case EstadoEnvio.LISTO:
+        return "LISTO";
+      case EstadoEnvio.EN_REPARTO:
+        return "EN REPARTO";
+      case EstadoEnvio.ENTREGADO:
+        return "ENTREGADO";
+      case EstadoEnvio.PAGADO:
+        return "PAGADO";
+      case EstadoEnvio.FINALIZADO:
+        return "FINALIZADO";
+      default:
+        return "Estado desconocido";
+    }
   }
 
 }

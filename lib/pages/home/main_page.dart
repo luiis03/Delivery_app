@@ -6,10 +6,8 @@ import 'package:delivery_app/utils/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:icon_badge/icon_badge.dart';
 import 'package:provider/provider.dart';
 
-import '../carrito/carrito_notifier.dart';
 import '../carrito/carrito_page.dart';
 import 'home_page.dart';
 
@@ -36,7 +34,6 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    final CarritoNotifier carritoNotifier = Provider.of<CarritoNotifier>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -88,7 +85,7 @@ class _MainPageState extends State<MainPage> {
           ],
         )
       ),
-      bottomNavigationBar: wBottomNavigationBar(carritoNotifier),
+      bottomNavigationBar: wBottomNavigationBar(),
       body: IndexedStack(
         index: _currentIndex,
         children: [
@@ -100,7 +97,7 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  CurvedNavigationBar wBottomNavigationBar(CarritoNotifier carritoNotifier) {
+  CurvedNavigationBar wBottomNavigationBar() {
     return CurvedNavigationBar(
       height: 55,
       color: AppColors.buttonBackgroundColor,
@@ -110,13 +107,7 @@ class _MainPageState extends State<MainPage> {
       items: <Widget>[
         Icon(Icons.person, size: 30, color: AppColors.naranja),
         Icon(Icons.home, size: 30, color: AppColors.naranja),
-        IconBadge(
-          icon: Icon(Icons.shopping_cart, color: AppColors.naranja),
-          itemCount: carritoNotifier.carrito.length,
-          badgeColor: Colors.black,
-          itemColor: Colors.white,
-          hideZero: true,
-        ),
+        Icon(Icons.shopping_cart, color: AppColors.naranja),
       ],
       onTap: (index) {
         setState(() {

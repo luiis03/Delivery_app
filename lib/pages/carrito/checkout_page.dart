@@ -14,12 +14,42 @@ class CheckoutPage extends StatefulWidget {
 
 class _CheckoutPageState extends State<CheckoutPage> {
   List<Producto> carrito = [
-    Producto(nombre: 'Productoasdaasdasdasdsasdsd 1', cantidad: 2, precio: 10.0, id: 1, imagen: "assets/img/hamburguesa_victoria.jpeg"),
-    Producto(nombre: 'Producto 2', cantidad: 1, precio: 15.0, id: 1, imagen: "assets/img/hamburguesa_victoria.jpeg"),
-    Producto(nombre: 'Producto 2', cantidad: 1, precio: 15.0, id: 1, imagen: "assets/img/hamburguesa_victoria.jpeg"),
-    Producto(nombre: 'Producto 2', cantidad: 1, precio: 15.0, id: 1, imagen: "assets/img/hamburguesa_victoria.jpeg"),
-    Producto(nombre: 'Producto 2', cantidad: 1, precio: 15.0, id: 1, imagen: "assets/img/hamburguesa_victoria.jpeg"),
-    Producto(nombre: 'Producto 2', cantidad: 1, precio: 15.0, id: 1, imagen: "assets/img/hamburguesa_victoria.jpeg"),
+    Producto(
+        nombre: 'Productoasdaasdasdasdsasdsd 1',
+        cantidad: 2,
+        precio: 10.0,
+        id: 1,
+        imagen: "assets/img/hamburguesa_victoria.jpeg"),
+    Producto(
+        nombre: 'Producto 2',
+        cantidad: 1,
+        precio: 15.0,
+        id: 1,
+        imagen: "assets/img/hamburguesa_victoria.jpeg"),
+    Producto(
+        nombre: 'Producto 2',
+        cantidad: 1,
+        precio: 15.0,
+        id: 1,
+        imagen: "assets/img/hamburguesa_victoria.jpeg"),
+    Producto(
+        nombre: 'Producto 2',
+        cantidad: 1,
+        precio: 15.0,
+        id: 1,
+        imagen: "assets/img/hamburguesa_victoria.jpeg"),
+    Producto(
+        nombre: 'Producto 2',
+        cantidad: 1,
+        precio: 15.0,
+        id: 1,
+        imagen: "assets/img/hamburguesa_victoria.jpeg"),
+    Producto(
+        nombre: 'Producto 2',
+        cantidad: 1,
+        precio: 15.0,
+        id: 1,
+        imagen: "assets/img/hamburguesa_victoria.jpeg"),
   ];
 
   @override
@@ -41,7 +71,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 color: Colors.grey[200],
                 elevation: 5.0,
                 child: Container(
-                  height: 500.0,
+                  height: 450.0,
                   padding: const EdgeInsets.all(15.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,65 +98,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         color: Colors.grey,
                       ),
                       // Lista de productos
-                      Container(
-                        height: 430.0,
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: carrito.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              height: 80,
-                              margin: EdgeInsets.symmetric(vertical: 5.0),
-                              padding: EdgeInsets.all(2.0),
-                              decoration: BoxDecoration(
-                                color: AppColors.naranja,
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              child: ListTile(
-                                contentPadding: EdgeInsets.fromLTRB(12, 5, 12, 8), // Ajusta los valores según tus preferencias
-                                leading: Container(
-                                  width: 70, // Ajusta el ancho del leading según tus preferencias
-                                  height: 80, // Ajusta la altura del leading según tus preferencias
-                                  decoration: BoxDecoration(
-                                    color: AppColors.naranja,
-                                    borderRadius: BorderRadius.circular(20), // Añade un borde
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image.asset(
-                                      "assets/img/hamburguesa_victoria.jpeg",
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                ),
-                                title: Text(
-                                  carrito[index].nombre.length > 25 ? carrito[index].nombre.substring(0, 25) + '...' : carrito[index].nombre,
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  'Precio: ${carrito[index].precio}',
-                                  style: const TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                  ),
-                                ),
-                                trailing: CircleAvatar(
-                                  radius: 15,
-                                  backgroundColor: Colors.black,
-                                  child: Text(
-                                    carrito[index].cantidad.toString(),
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-
-                              ),
-                            );
-                          },
-                        ),
+                      Expanded(
+                        child: listProductos(),
                       ),
                     ],
                   ),
@@ -148,9 +121,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
                         child: Column(
                           children: [
                             ListTile(
-                              tileColor: AppColors.naranja, // Color de fondo del ListTile
+                              tileColor: AppColors
+                                  .naranja, // Color de fondo del ListTile
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0), // Bordes redondeados del ListTile
+                                borderRadius: BorderRadius.circular(
+                                    8.0), // Bordes redondeados del ListTile
                               ),
                               title: Center(
                                 child: Text(
@@ -167,15 +142,38 @@ class _CheckoutPageState extends State<CheckoutPage> {
                             // Botón Terminar pedido
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.naranja, // Color de fondo del botón
+                                backgroundColor: AppColors
+                                    .naranja, // Color de fondo del botón
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5.0), // Bordes redondeados del botón// Borde del botón
+                                  borderRadius: BorderRadius.circular(
+                                      5.0), // Bordes redondeados del botón// Borde del botón
                                 ),
                               ),
                               onPressed: () {
-                                // Navegar a la pantalla de finalización del pedido
+                                // Mostrar el diálogo
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text("Pedido confirmado"),
+                                      content: Text("Gracias por confirmar su pedido."),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop(); // Cerrar el diálogo
+                                          },
+                                          child: Text(
+                                            "Cerrar",
+                                            style: TextStyle(color: AppColors.naranja),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
                               },
-                              child: Text('Terminar Pedido',
+                              child: Text(
+                                'Confirmar Pedido',
                                 style: TextStyle(
                                   color: Colors.black, // Color del texto
                                   fontWeight: FontWeight.bold,
@@ -186,15 +184,79 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           ],
                         ),
                       )
-
                     ],
                   ),
                 ),
               )
-
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Container listProductos() {
+    return Container(
+      height: 430.0,
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: carrito.length,
+        itemBuilder: (context, index) {
+          return Container(
+            height: 80,
+            margin: EdgeInsets.symmetric(vertical: 5.0),
+            padding: EdgeInsets.all(2.0),
+            decoration: BoxDecoration(
+              color: AppColors.naranja,
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: ListTile(
+              contentPadding: EdgeInsets.fromLTRB(
+                  12, 5, 12, 8), // Ajusta los valores según tus preferencias
+              leading: Container(
+                width: 70, // Ajusta el ancho del leading según tus preferencias
+                height:
+                    80, // Ajusta la altura del leading según tus preferencias
+                decoration: BoxDecoration(
+                  color: AppColors.naranja,
+                  borderRadius: BorderRadius.circular(20), // Añade un borde
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.asset(
+                    "assets/img/hamburguesa_victoria.jpeg",
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              title: Text(
+                carrito[index].nombre.length > 25
+                    ? carrito[index].nombre.substring(0, 25) + '...'
+                    : carrito[index].nombre,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              subtitle: Text(
+                'Precio: ${carrito[index].precio}',
+                style: const TextStyle(
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+              trailing: CircleAvatar(
+                radius: 15,
+                backgroundColor: Colors.black,
+                child: Text(
+                  carrito[index].cantidad.toString(),
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
@@ -208,5 +270,4 @@ class _CheckoutPageState extends State<CheckoutPage> {
     }
     return total;
   }
-
 }

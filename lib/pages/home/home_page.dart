@@ -107,17 +107,17 @@ class _HomePageState extends State<HomePage> {
                       ),
                       title: Text(restaurante.nombre),
                       subtitle: Text(restaurante.direccion),
-                      trailing: IconButton(
-                        onPressed: () {
-                          agregarParadaABaseDatosIcono();
-                        },
-                        icon: Icon(
-                          estaEnBaseDatos
-                              ? Icons.favorite
-                              : Icons.favorite_border,
-                          color: estaEnBaseDatos ? Colors.red : null,
-                        ),
-                      ),
+                      // trailing: IconButton(
+                      //   onPressed: () {
+                      //     agregarRestauranteBaseDatosIcono();
+                      //   },
+                      //   icon: Icon(
+                      //     estaEnBaseDatos
+                      //         ? Icons.favorite
+                      //         : Icons.favorite_border,
+                      //     color: estaEnBaseDatos ? Colors.red : null,
+                      //   ),
+                      // ),
                       onTap: () => context.push(RestaurantePage(restaurantes: restaurante)),
                     ),
                   ),
@@ -130,7 +130,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void agregarParadaABaseDatosIcono() {
+  void agregarRestauranteBaseDatosIcono() {
     if (estaEnBaseDatos) {
       showDialog(
         context: context,

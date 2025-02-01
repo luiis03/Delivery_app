@@ -32,7 +32,7 @@ class _CarritoPageState extends State<CarritoPage> {
                 color: Colors.grey[200],
                 elevation: 5.0,
                 child: Container(
-                  height: 500.0,
+                  height: 430.0,
                   padding: const EdgeInsets.all(15.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,15 +51,17 @@ class _CarritoPageState extends State<CarritoPage> {
                               ),
                             ],
                           ),
-                          Icon(Icons.shopping_cart_outlined)
+                          Icon(Icons.shopping_cart_outlined),
                         ],
                       ),
                       Divider(
                         height: 15,
                         color: Colors.grey,
                       ),
-                      // Lista de productos
-                      listProductos(carritoNotifier)
+                      // Lista de productos con scroll
+                      Expanded(
+                        child: listProductos(carritoNotifier),
+                      ),
                     ],
                   ),
                 ),

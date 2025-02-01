@@ -63,7 +63,7 @@ class _RestaurantePageState extends State<RestaurantePage> {
                             child: Stack(
                               children: [
                                 Center(
-                                  child: Icon(Icons.shopping_cart_outlined, color: Colors.black),
+                                  child: Icon(Icons.shopping_cart_rounded, color: AppColors.naranja),
                                 ),
                                 if (carritoNotifier.carrito.isNotEmpty)
                                   Positioned(
@@ -74,10 +74,10 @@ class _RestaurantePageState extends State<RestaurantePage> {
                                       duration: const Duration(milliseconds: 300),
                                       child: CircleAvatar(
                                         radius: 10,
-                                        backgroundColor: Colors.white,
+                                        backgroundColor: Colors.black,
                                         child: Text(
                                           carritoNotifier.carrito.length.toString(),
-                                          style: TextStyle(fontSize: 12, color: AppColors.naranja),
+                                          style: TextStyle(fontSize: 12, color: Colors.white),
                                         ),
                                       ),
                                     ),
